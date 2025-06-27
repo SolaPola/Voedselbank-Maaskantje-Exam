@@ -4,7 +4,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\WarehouseWorkerDashboardController;
 use App\Http\Controllers\VolunteerDashboardController;
+
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FoodPackageController;
 use App\Http\Controllers\SupplierController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +32,19 @@ Route::get('/dashboard', function () {
 // Role-specific dashboard routes
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/admin/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/admin/clients/create', [ClientController::class, 'create'])->name('clients.create');
+    Route::post('/admin/clients', [ClientController::class, 'store'])->name('clients.store');
+    Route::get('/admin/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
+    Route::get('/admin/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
+    Route::put('/admin/clients/{id}', [ClientController::class, 'update'])->name('clients.update');
+    Route::delete('/admin/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
+    
+    // Food Packages routes
+    Route::get('/admin/food-packages', [FoodPackageController::class, 'index'])->name('food-packages.index');
+    Route::get('/admin/food-packages/{id}', [FoodPackageController::class, 'show'])->name('food-packages.show');
+
     
     // Supplier routes with full resource
     Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');

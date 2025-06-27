@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('address');
             $table->string('contact_name');
             $table->string('contact_email');
-            $table->string('phone');
+            $table->bigInteger('phone');
             $table->date('next_delivery')->nullable();
             $table->text('comment')->nullable();
             $table->boolean('isactive')->default(true);

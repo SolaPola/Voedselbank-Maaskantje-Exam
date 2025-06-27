@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Provincialeweg 11, 1506 MA Zaandam',
             'contact_name' => 'Jan Janssen',
             'contact_email' => 'jan.janssen@ah.nl',
-            'phone' => '075-6591000',
+            'phone' => 756591000,
             'next_delivery' => now()->addDays(7),
             'comment' => 'Hoofdleverancier voor verse producten',
             'isactive' => true,
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Industrieweg 1, 5466 AE Veghel',
             'contact_name' => 'Piet Pietersen',
             'contact_email' => 'p.pietersen@jumbo.com',
-            'phone' => '0413-366000',
+            'phone' => 413366000,
             'next_delivery' => now()->addDays(5),
             'comment' => 'Leverancier van houdbare producten',
             'isactive' => true,
@@ -175,17 +175,18 @@ class DatabaseSeeder extends Seeder
             'isactive' => true,
         ]);
 
-        // Seed Clients
+        // Seed Clients - Multiple dummy clients (expanded to 50+ clients)
         Client::create([
             'name' => 'Familie de Vries',
             'address' => 'Kerkstraat 15, 5231 BC Den Bosch',
             'postal_code' => '5231 BC',
-            'phone' => '073-1234567',
+            'phone' => 731234567,
             'email' => 'devries@email.com',
+            'preference' => 'Glutenvrij',
             'adults' => 2,
             'children' => 2,
             'babies' => 0,
-            'comment' => 'Gezin met 2 kinderen',
+            'comment' => 'Gezin met 2 kinderen, glutenallergie',
             'isactive' => true,
         ]);
 
@@ -193,12 +194,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Mevrouw Jansen',
             'address' => 'Dorpsstraat 8, 5232 AB Den Bosch',
             'postal_code' => '5232 AB',
-            'phone' => '073-2345678',
+            'phone' => 732345678,
             'email' => 'jansen@email.com',
+            'preference' => 'Vegetarisch',
             'adults' => 1,
             'children' => 0,
             'babies' => 0,
-            'comment' => 'Alleenstaande senior',
+            'comment' => 'Alleenstaande senior, vegetarisch',
             'isactive' => true,
         ]);
 
@@ -206,16 +208,178 @@ class DatabaseSeeder extends Seeder
             'name' => 'Familie Bakker',
             'address' => 'Marktplein 23, 5233 CD Den Bosch',
             'postal_code' => '5233 CD',
-            'phone' => '073-3456789',
+            'phone' => 733456789,
             'email' => 'bakker@email.com',
+            'preference' => 'Halal',
             'adults' => 2,
             'children' => 1,
             'babies' => 1,
-            'comment' => 'Jong gezin met baby',
+            'comment' => 'Jong gezin met baby, halal voeding',
             'isactive' => true,
         ]);
 
-        // Seed Food Packages
+        Client::create([
+            'name' => 'Meneer van der Berg',
+            'address' => 'Schoolstraat 45, 5234 EF Den Bosch',
+            'postal_code' => '5234 EF',
+            'phone' => 734567890,
+            'email' => 'vandenberg@email.com',
+            'preference' => null,
+            'adults' => 1,
+            'children' => 3,
+            'babies' => 0,
+            'comment' => 'Alleenstaande vader met 3 kinderen',
+            'isactive' => true,
+        ]);
+
+        Client::create([
+            'name' => 'Familie Hassan',
+            'address' => 'Nieuwstraat 12, 5235 GH Den Bosch',
+            'postal_code' => '5235 GH',
+            'phone' => 735678901,
+            'email' => 'hassan@email.com',
+            'preference' => 'Halal',
+            'adults' => 3,
+            'children' => 4,
+            'babies' => 1,
+            'comment' => 'Groot gezin, halal voeding vereist',
+            'isactive' => true,
+        ]);
+
+        Client::create([
+            'name' => 'Mevrouw Pietersen',
+            'address' => 'Bosstraat 67, 5236 IJ Den Bosch',
+            'postal_code' => '5236 IJ',
+            'phone' => 736789012,
+            'email' => 'pietersen@email.com',
+            'preference' => 'Lactosevrij',
+            'adults' => 1,
+            'children' => 0,
+            'babies' => 0,
+            'comment' => 'Senior met lactose-intolerantie',
+            'isactive' => true,
+        ]);
+
+        Client::create([
+            'name' => 'Familie Rodriguez',
+            'address' => 'Waterstraat 89, 5237 KL Den Bosch',
+            'postal_code' => '5237 KL',
+            'phone' => 737890123,
+            'email' => 'rodriguez@email.com',
+            'preference' => null,
+            'adults' => 2,
+            'children' => 1,
+            'babies' => 0,
+            'comment' => 'Gezin met 1 kind, geen speciale wensen',
+            'isactive' => true,
+        ]);
+
+        Client::create([
+            'name' => 'Meneer Smit',
+            'address' => 'Parkstraat 34, 5238 MN Den Bosch',
+            'postal_code' => '5238 MN',
+            'phone' => 738901234,
+            'email' => 'smit@email.com',
+            'preference' => 'Diabetisch',
+            'adults' => 1,
+            'children' => 0,
+            'babies' => 0,
+            'comment' => 'Diabetische voeding nodig',
+            'isactive' => true,
+        ]);
+
+        Client::create([
+            'name' => 'Familie Kowalski',
+            'address' => 'Beatrixstraat 56, 5239 OP Den Bosch',
+            'postal_code' => '5239 OP',
+            'phone' => 739012345,
+            'email' => 'kowalski@email.com',
+            'preference' => null,
+            'adults' => 2,
+            'children' => 2,
+            'babies' => 2,
+            'comment' => 'Gezin met tweelingen, veel babyvoeding nodig',
+            'isactive' => true,
+        ]);
+
+        Client::create([
+            'name' => 'Mevrouw de Wit',
+            'address' => 'Rozenlaan 78, 5240 QR Den Bosch',
+            'postal_code' => '5240 QR',
+            'phone' => 730123456,
+            'email' => 'dewit@email.com',
+            'preference' => 'Veganistisch',
+            'adults' => 1,
+            'children' => 1,
+            'babies' => 0,
+            'comment' => 'Alleenstaande moeder, veganistisch',
+            'isactive' => true,
+        ]);
+
+        // 40+ clients seeder 
+        $additionalClients = [
+            ['Familie van den Berg', 'Lange Putstraat 10', '5211 KW', 731111111, 'vandenberg2@email.com', null, 2, 3, 0, 'Groot gezin'],
+            ['Mevrouw Willems', 'Sint Jansstraat 25', '5211 DA', 732222222, 'willems@email.com', 'Vegetarisch', 1, 0, 0, 'Senior dame'],
+            ['Familie Janssen', 'Hinthamerstraat 42', '5211 MV', 733333333, 'janssen@email.com', 'Halal', 2, 2, 1, 'Jong gezin'],
+            ['Meneer Peters', 'Korte Putstraat 8', '5211 KP', 734444444, 'peters@email.com', null, 1, 1, 0, 'Alleenstaande vader'],
+            ['Familie Dekker', 'Verwersstraat 15', '5211 HT', 735555555, 'dekker@email.com', 'Lactosevrij', 2, 2, 0, 'Beide ouders werkzoekend'],
+            ['Mevrouw Mulder', 'Postelstraat 33', '5211 EA', 736666666, 'mulder@email.com', 'Diabetisch', 1, 0, 0, 'Diabetespatiënt'],
+            ['Familie Ahmed', 'Kerkstraat 88', '5211 DZ', 737777777, 'ahmed@email.com', 'Halal', 3, 4, 2, 'Grote familie'],
+            ['Meneer Visser', 'Magistratenlaan 7', '5223 MA', 738888888, 'visser@email.com', null, 1, 2, 0, 'Gescheiden vader'],
+            ['Familie Chen', 'Orthenseweg 45', '5213 HH', 739999999, 'chen@email.com', null, 2, 1, 0, 'Nieuw in Nederland'],
+            ['Mevrouw de Jong', 'Vughterstraat 120', '5211 GM', 731010101, 'dejong@email.com', 'Veganistisch', 1, 0, 0, 'Gepensioneerde'],
+            ['Familie Pol', 'Citadellaan 22', '5211 XA', 731212121, 'pol@email.com', null, 2, 3, 0, 'Vader ziek'],
+            ['Meneer Groot', 'Wolvenstraat 9', '5211 HH', 731313131, 'groot@email.com', null, 1, 0, 0, 'Senior meneer'],
+            ['Familie Brouwer', 'Snelliusstraat 56', '5223 CB', 731414141, 'brouwer@email.com', 'Glutenvrij', 2, 1, 1, 'Baby met allergie'],
+            ['Mevrouw Schouten', 'Bethaniestraat 11', '5211 HG', 731515151, 'schouten@email.com', null, 1, 2, 0, 'Alleenstaande moeder'],
+            ['Familie Driessen', 'Graafseweg 234', '5213 AS', 731616161, 'driessen@email.com', 'Halal', 2, 2, 0, 'Moslimgezin'],
+            ['Meneer Koning', 'Napoleonstraat 67', '5212 AE', 731717171, 'koning@email.com', 'Diabetisch', 1, 1, 0, 'Type 2 diabetes'],
+            ['Familie Hofman', 'Wilhelminastraat 89', '5212 BH', 731818181, 'hofman@email.com', null, 2, 4, 0, 'Vier kinderen'],
+            ['Mevrouw Boer', 'Hamstraat 34', '5211 TX', 731919191, 'boer@email.com', 'Lactosevrij', 1, 0, 0, 'Lactose-intolerant'],
+            ['Familie Leeuwen', 'Eerste Sweelinckstraat 12', '5223 GE', 732020202, 'leeuwen@email.com', null, 2, 1, 1, 'Pasgeboren baby'],
+            ['Meneer Verhoeven', 'Aartshertogenlaan 78', '5212 CP', 732121212, 'verhoeven@email.com', null, 1, 3, 0, 'Vader van drieling'],
+            ['Familie Mohamed', 'Pater van den Elsenstraat 23', '5224 VS', 732222223, 'mohamed@email.com', 'Halal', 4, 3, 1, 'Zeer grote familie'],
+            ['Mevrouw Hendriks', 'Dommelstraat 45', '5213 VT', 732323232, 'hendriks@email.com', 'Vegetarisch', 1, 1, 0, 'Single moeder'],
+            ['Familie Claassen', 'Monseigneur Bekkersstraat 67', '5223 BG', 732424242, 'claassen@email.com', null, 2, 2, 0, 'Beide werkloos'],
+            ['Meneer Kuiper', 'Margrietstraat 89', '5214 AB', 732525252, 'kuiper@email.com', null, 1, 0, 0, 'Oudere meneer'],
+            ['Familie Singh', 'Tulpstraat 101', '5214 CD', 732626262, 'singh@email.com', 'Vegetarisch', 3, 2, 0, 'Sikh familie'],
+            ['Mevrouw Rutten', 'Rozenstraat 23', '5214 EF', 732727272, 'rutten@email.com', null, 1, 1, 0, 'Weduwe'],
+            ['Familie Berg', 'Lilystraat 45', '5214 GH', 732828282, 'berg@email.com', 'Glutenvrij', 2, 3, 1, 'Kind met coeliakie'],
+            ['Meneer Wit', 'Jasmijnstraat 67', '5214 IJ', 732929292, 'wit@email.com', null, 1, 2, 0, 'Gescheiden vader'],
+            ['Familie Zwart', 'Narcissenstraat 89', '5214 KL', 733030303, 'zwart@email.com', 'Veganistisch', 2, 1, 0, 'Vegan lifestyle'],
+            ['Mevrouw Groen', 'Hyacintstraat 12', '5214 MN', 733131313, 'groen@email.com', 'Lactosevrij', 1, 0, 0, 'Lactose problemen'],
+            ['Familie Blauw', 'Irislaan 34', '5215 AB', 733232323, 'blauw@email.com', null, 2, 2, 2, 'Tweeling babies'],
+            ['Meneer Geel', 'Violenstraat 56', '5215 CD', 733333334, 'geel@email.com', 'Diabetisch', 1, 1, 0, 'Type 1 diabetes'],
+            ['Familie Rood', 'Fresia laan 78', '5215 EF', 733434343, 'rood@email.com', null, 2, 4, 0, 'Kinderrijk gezin'],
+            ['Mevrouw Paars', 'Begoniastraat 90', '5215 GH', 733535353, 'paars@email.com', null, 1, 1, 0, 'Student met kind'],
+            ['Familie Oranje', 'Azaleastraat 12', '5215 IJ', 733636363, 'oranje@email.com', 'Halal', 2, 3, 0, 'Traditioneel gezin'],
+            ['Meneer Roze', 'Dahlia straat 34', '5215 KL', 733737373, 'roze@email.com', null, 1, 0, 0, 'Gepensioneerd'],
+            ['Familie Bruin', 'Anjelierenstraat 56', '5215 MN', 733838383, 'bruin@email.com', 'Glutenvrij', 2, 1, 1, 'Baby en peuter'],
+            ['Mevrouw Grijs', 'Geraniumstraat 78', '5216 AB', 733939393, 'grijs@email.com', null, 1, 2, 0, 'Weduwe met kinderen'],
+            ['Familie Zilver', 'Petunia laan 90', '5216 CD', 734040404, 'zilver@email.com', 'Vegetarisch', 2, 1, 0, 'Bewuste keuze'],
+            ['Meneer Goud', 'Zonnebloem straat 123', '5216 EF', 734141414, 'goud@email.com', null, 1, 3, 0, 'Vader van drie'],
+            ['Familie Koper', 'Lavendelstraat 145', '5216 GH', 734242424, 'koper@email.com', 'Lactosevrij', 2, 2, 0, 'Gezin met allergieën'],
+            ['Mevrouw Brons', 'Rozemarijnstraat 167', '5216 IJ', 734343434, 'brons@email.com', null, 1, 0, 0, 'Oudere dame'],
+            ['Familie Diamant', 'Tijmstraat 189', '5216 KL', 734444445, 'diamant@email.com', 'Halal', 3, 5, 2, 'Zeer grote familie'],
+        ];
+
+        foreach ($additionalClients as $index => $clientData) {
+            Client::create([
+                'name' => $clientData[0],
+                'address' => $clientData[1] . ', ' . $clientData[2] . ' Den Bosch',
+                'postal_code' => $clientData[2],
+                'phone' => $clientData[3],
+                'email' => $clientData[4],
+                'preference' => $clientData[5],
+                'adults' => $clientData[6],
+                'children' => $clientData[7],
+                'babies' => $clientData[8],
+                'comment' => $clientData[9],
+                'isactive' => true,
+            ]);
+        }
+
+        // Seed Food Packages - Extended with more packages for different clients
         $foodPackage1 = FoodPackage::create([
             'client_id' => 1,
             'issued_at' => now(),
@@ -230,7 +394,51 @@ class DatabaseSeeder extends Seeder
             'isactive' => true,
         ]);
 
-        // Seed Package Items
+        // Additional food packages for first client (Familie de Vries)
+        $foodPackage3 = FoodPackage::create([
+            'client_id' => 1,
+            'issued_at' => now()->subDays(7),
+            'comment' => 'Vorige week pakket',
+            'isactive' => true,
+        ]);
+
+        $foodPackage4 = FoodPackage::create([
+            'client_id' => 1,
+            'issued_at' => now()->subDays(14),
+            'comment' => 'Twee weken geleden pakket',
+            'isactive' => true,
+        ]);
+
+        $foodPackage5 = FoodPackage::create([
+            'client_id' => 1,
+            'issued_at' => now()->subDays(21),
+            'comment' => 'Drie weken geleden pakket',
+            'isactive' => true,
+        ]);
+
+        // Food packages for other clients
+        $foodPackage6 = FoodPackage::create([
+            'client_id' => 3,
+            'issued_at' => now()->subDays(2),
+            'comment' => 'Halal pakket voor Familie Bakker',
+            'isactive' => true,
+        ]);
+
+        $foodPackage7 = FoodPackage::create([
+            'client_id' => 3,
+            'issued_at' => now()->subDays(9),
+            'comment' => 'Vorige week halal pakket',
+            'isactive' => true,
+        ]);
+
+        $foodPackage8 = FoodPackage::create([
+            'client_id' => 4,
+            'issued_at' => now()->subDays(3),
+            'comment' => 'Groot pakket voor alleenstaande vader',
+            'isactive' => true,
+        ]);
+
+        // Seed Package Items - Extended with more variety
         PackageItem::create([
             'food_package_id' => $foodPackage1->id,
             'product_id' => 1,
@@ -250,11 +458,169 @@ class DatabaseSeeder extends Seeder
         ]);
 
         PackageItem::create([
+            'food_package_id' => $foodPackage1->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 2,
+            'comment' => '2 trossen bananen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage1->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 3,
+            'comment' => '3 pakken melk',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
             'food_package_id' => $foodPackage2->id,
             'product_id' => 3,
             'product_name' => 'Bananen',
             'amount' => 1,
             'comment' => '1 tros bananen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage2->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 1,
+            'comment' => '1 brood',
+            'isactive' => true,
+        ]);
+
+        // Package items for foodPackage3 (week ago)
+        PackageItem::create([
+            'food_package_id' => $foodPackage3->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 2,
+            'comment' => 'Wekelijks brood',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage3->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 1,
+            'comment' => 'Basis rijst',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage3->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 2,
+            'comment' => 'Melk voor gezin',
+            'isactive' => true,
+        ]);
+
+        // Package items for foodPackage4 (2 weeks ago)
+        PackageItem::create([
+            'food_package_id' => $foodPackage4->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 3,
+            'comment' => 'Extra brood',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage4->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 1,
+            'comment' => 'Fruit voor kinderen',
+            'isactive' => true,
+        ]);
+
+        // Package items for foodPackage5 (3 weeks ago)
+        PackageItem::create([
+            'food_package_id' => $foodPackage5->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 2,
+            'comment' => 'Dubbele portie rijst',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage5->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 4,
+            'comment' => 'Veel melk voor groot gezin',
+            'isactive' => true,
+        ]);
+
+        // Package items for Familie Bakker (halal)
+        PackageItem::create([
+            'food_package_id' => $foodPackage6->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 1,
+            'comment' => 'Halal rijst',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage6->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 2,
+            'comment' => 'Fruit voor baby',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage7->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 2,
+            'comment' => 'Halal brood',
+            'isactive' => true,
+        ]);
+
+        // Package items for alleenstaande vader
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 4,
+            'comment' => 'Veel brood voor 3 kinderen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 2,
+            'comment' => 'Basisvoeding',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 3,
+            'comment' => 'Fruit voor kinderen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 5,
+            'comment' => 'Veel melk voor groot gezin',
             'isactive' => true,
         ]);
 
@@ -283,7 +649,7 @@ class DatabaseSeeder extends Seeder
         Contact::create([
             'name' => 'Gemeente Den Bosch',
             'email' => 'info@denbosch.nl',
-            'phone' => '073-156156',
+            'phone' => 73156156,
             'comment' => 'Contactpersoon voor subsidies',
             'isactive' => true,
         ]);
@@ -291,7 +657,7 @@ class DatabaseSeeder extends Seeder
         Contact::create([
             'name' => 'Voedselbank Nederland',
             'email' => 'info@voedselbankennederland.nl',
-            'phone' => '030-2440440',
+            'phone' => 302440440,
             'comment' => 'Landelijke organisatie',
             'isactive' => true,
         ]);
@@ -299,7 +665,7 @@ class DatabaseSeeder extends Seeder
         Contact::create([
             'name' => 'Lokale Supermarkt',
             'email' => 'manager@lokalesupermarkt.nl',
-            'phone' => '073-7890123',
+            'phone' => 737890123,
             'comment' => 'Donateur van overschotten',
             'isactive' => true,
         ]);
