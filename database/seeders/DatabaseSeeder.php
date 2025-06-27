@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
             'isactive' => true,
         ]);
 
-        // Seed Suppliers
+        // Seed Suppliers with more realistic data
         Supplier::create([
             'name' => 'Albert Heijn Distributie',
             'address' => 'Provincialeweg 11, 1506 MA Zaandam',
@@ -93,6 +93,40 @@ class DatabaseSeeder extends Seeder
             'phone' => 413366000,
             'next_delivery' => now()->addDays(5),
             'comment' => 'Leverancier van houdbare producten',
+            'isactive' => true,
+        ]);
+        
+        // Add more suppliers for a realistic overview
+        Supplier::create([
+            'name' => 'Lokale Boerderij "De Groene Weide"',
+            'address' => 'Buitenweg 23, 5233 DE Maaskantje',
+            'contact_name' => 'Boer Henk',
+            'contact_email' => 'henk@groenweide.nl',
+            'phone' => '073-8765432',
+            'next_delivery' => now()->addDays(2),
+            'comment' => 'Levert verse groenten op maandag en donderdag',
+            'isactive' => true,
+        ]);
+        
+        Supplier::create([
+            'name' => 'Bakkerij Van Doorn',
+            'address' => 'Dorpsstraat 12, 5235 FB Maaskantje',
+            'contact_name' => 'Klaas van Doorn',
+            'contact_email' => 'bakkerij@vandoorn.nl',
+            'phone' => '073-9876543',
+            'next_delivery' => now()->addDays(1),
+            'comment' => 'Dagelijkse levering van overgebleven brood',
+            'isactive' => true,
+        ]);
+        
+        Supplier::create([
+            'name' => 'Groothandel Foodmax',
+            'address' => 'Industriestraat 45, 5301 GH Eindhoven',
+            'contact_name' => 'Sandra de Groot',
+            'contact_email' => 'sandra@foodmax.nl',
+            'phone' => '040-1234567',
+            'next_delivery' => now()->addDays(14),
+            'comment' => 'Tweewekelijkse levering van houdbare producten',
             'isactive' => true,
         ]);
 
