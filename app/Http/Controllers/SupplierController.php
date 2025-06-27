@@ -6,6 +6,8 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SupplierController extends Controller
 {
@@ -15,12 +17,33 @@ class SupplierController extends Controller
     public function index()
     {
         try {
-            $suppliers = Supplier::where('isactive', true)
-                ->orderBy('name')
-                ->paginate(10);
+            // Get current page for pagination
+            $currentPage = request()->get('page', 1);
+            $perPage = 10;
+
+            // Call the stored procedure
+            $suppliers = DB::select('CALL GetActiveSuppliers()');
+            
+            // Convert to collection for pagination
+            $collection = collect($suppliers);
+            
+            // Get the total count
+            $total = $collection->count();
+            
+            // Slice the collection for the current page
+            $currentPageItems = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+            
+            // Create a paginator instance
+            $paginatedSuppliers = new LengthAwarePaginator(
+                $currentPageItems,
+                $total,
+                $perPage,
+                $currentPage,
+                ['path' => request()->url(), 'query' => request()->query()]
+            );
             
             return view('suppliers.index', [
-                'suppliers' => $suppliers,
+                'suppliers' => $paginatedSuppliers,
                 'error' => null
             ]);
         } catch (Exception $e) {
