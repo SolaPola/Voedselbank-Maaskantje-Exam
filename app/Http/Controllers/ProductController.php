@@ -206,4 +206,50 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with('error', 'Product niet gevonden.');
         }
     }
+
+    public function edit($id)
+    {
+        try {
+            $product = Product::findOrFail($id);
+            $categories = Category::where('isactive', true)->get();
+            return view('product.edit', compact('product', 'categories'));
+        } catch (\Exception $e) {
+            return redirect()->route('products.index')->with('error', 'Product niet gevonden.');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'categoriesid' => 'required|exists:categories,id',
+            'ean_code' => 'nullable|string|max:255',
+            'stock' => 'required|integer|min:0',
+            'expiry_date' => 'nullable|date',
+            'comment' => 'nullable|string',
+            'isactive' => 'required|boolean',
+        ]);
+
+        try {
+            $product = Product::findOrFail($id);
+            $product->update($request->all());
+            
+            return redirect()->route('products.index')->with('success', 'Product succesvol bijgewerkt!');
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'Er is een fout opgetreden bij het bijwerken van het product: ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $product = Product::findOrFail($id);
+            $productName = $product->name;
+            $product->delete();
+            
+            return redirect()->route('products.index')->with('success', 'Product "' . $productName . '" succesvol verwijderd!');
+        } catch (\Exception $e) {
+            return redirect()->route('products.index')->with('error', 'Er is een fout opgetreden bij het verwijderen van het product.');
+        }
+    }
 }
