@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\WarehouseWorkerDashboardController;
 use App\Http\Controllers\VolunteerDashboardController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'warehouse.worker'])->group(function () {
     Route::get('/warehouse/dashboard', [WarehouseWorkerDashboardController::class, 'index'])->name('warehouse.dashboard');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 });
 
 Route::middleware(['auth', 'volunteer'])->group(function () {

@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('categoryid')->constrained('categories');
+            $table->foreignId('categoriesid')->constrained('categories');
             $table->string('ean_code')->nullable();
-            $table->string('category');
             $table->integer('stock')->default(0);
             $table->date('expiry_date')->nullable();
             $table->text('comment')->nullable();

@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Jan de Magazijnmedewerker',
             'email' => 'magazijn@voedselbankmaaskantje.nl',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('1'),
             'role' => 'warehouse_worker',
             'email_verified_at' => now(),
         ]);
@@ -99,9 +99,8 @@ class DatabaseSeeder extends Seeder
         // Seed Products
         Product::create([
             'name' => 'Wit Brood',
-            'categoryid' => 1,
+            'categoriesid' => 1,
             'ean_code' => '8710398501301',
-            'category' => 'Granen & Brood',
             'stock' => 50,
             'expiry_date' => now()->addDays(3),
             'comment' => 'Vers wit brood',
@@ -110,9 +109,9 @@ class DatabaseSeeder extends Seeder
 
         Product::create([
             'name' => 'Rijst 1kg',
-            'categoryid' => 1,
+            'categoriesid' => 1,
             'ean_code' => '8712566321456',
-            'category' => 'Granen & Brood',
+       
             'stock' => 100,
             'expiry_date' => now()->addMonths(12),
             'comment' => 'Basmati rijst',
@@ -121,9 +120,9 @@ class DatabaseSeeder extends Seeder
 
         Product::create([
             'name' => 'Bananen',
-            'categoryid' => 2,
+            'categoriesid' => 2,
             'ean_code' => '8712345678901',
-            'category' => 'Groenten & Fruit',
+       
             'stock' => 25,
             'expiry_date' => now()->addDays(5),
             'comment' => 'Verse bananen',
@@ -132,9 +131,9 @@ class DatabaseSeeder extends Seeder
 
         Product::create([
             'name' => 'Melk 1L',
-            'categoryid' => 3,
+            'categoriesid' => 3,
             'ean_code' => '8712345678902',
-            'category' => 'Zuivel',
+          
             'stock' => 40,
             'expiry_date' => now()->addDays(7),
             'comment' => 'Volle melk',

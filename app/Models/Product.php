@@ -11,9 +11,8 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'categoryid',
+        'categoriesid',
         'ean_code',
-        'category',
         'stock',
         'expiry_date',
         'comment',
@@ -31,7 +30,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'categoryid');
+        return $this->belongsTo(Category::class, 'categoriesid');
     }
 
     public function deliveries()
