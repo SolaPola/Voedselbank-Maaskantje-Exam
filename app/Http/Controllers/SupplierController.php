@@ -205,13 +205,25 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         try {
+            // Store the supplier name for the success message
+            $supplierName = $supplier->name;
+            
+            // Perform soft delete by setting isactive to false
             $supplier->update(['isactive' => false]);
             
+            // Redirect to the suppliers index with a success message
             return redirect()->route('suppliers.index')
-                ->with('success', 'Leverancier succesvol verwijderd.');
+                ->with('success', "Leverancier '{$supplierName}' succesvol verwijderd.");
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle database query exceptions specifically
+            Log::error('Database error removing supplier: ' . $e->getMessage());
+            
+            return back()->with('error', 'Er is een fout opgetreden bij het verwijderen van de leverancier.');
         } catch (Exception $e) {
+            // Log the error
             Log::error('Error removing supplier: ' . $e->getMessage());
             
+            // Redirect back with error message
             return back()->with('error', 'Er is een fout opgetreden bij het verwijderen van de leverancier.');
         }
     }

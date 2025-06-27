@@ -295,11 +295,11 @@
                                             </svg>
                                         </a>
                                         <form method="POST" action="{{ route('suppliers.destroy', $supplier->id) }}"
-                                            class="inline"
-                                            onsubmit="return confirm('Weet je zeker dat je deze leverancier wilt verwijderen?')">
+                                            class="inline delete-supplier-form-{{ $supplier->id }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"
+                                            <button type="button"
+                                                onclick="confirmDelete('{{ $supplier->id }}', '{{ $supplier->name }}')"
                                                 class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition"
                                                 title="Verwijderen">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
@@ -453,6 +453,12 @@
                 }, 4000);
             }
         });
+
+        function confirmDelete(supplierId, supplierName) {
+            if (confirm(`Weet je zeker dat je leverancier "${supplierName}" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.`)) {
+                document.querySelector(`.delete-supplier-form-${supplierId}`).submit();
+            }
+        }
     </script>
 </body>
 
