@@ -76,6 +76,18 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         try {
+            // Check if a supplier with the same name AND email already exists
+            $existingSupplier = Supplier::where('isactive', true)
+                ->where('name', $request->name)
+                ->where('contact_email', $request->contact_email)
+                ->first();
+                
+            if ($existingSupplier) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('duplicate_error', true);
+            }
+            
             // Enhanced validation with better rules and custom messages
             $validated = $request->validate([
                 'name' => 'required|string|max:255|unique:suppliers,name,NULL,id,isactive,1',
@@ -145,6 +157,31 @@ class SupplierController extends Controller
     public function update(Request $request, Supplier $supplier)
     {
         try {
+            // Check if email is already in use by another active supplier
+            $duplicateEmail = Supplier::where('isactive', true)
+                ->where('id', '!=', $supplier->id) // Exclude current supplier
+                ->where('contact_email', $request->contact_email)
+                ->first();
+                
+            if ($duplicateEmail) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('email_error', 'Dit e-mailadres is al in gebruik bij een andere leverancier.');
+            }
+            
+            // Check if another supplier with the same name AND email already exists
+            $existingSupplier = Supplier::where('isactive', true)
+                ->where('id', '!=', $supplier->id) // Exclude current supplier
+                ->where('name', $request->name)
+                ->where('contact_email', $request->contact_email)
+                ->first();
+                
+            if ($existingSupplier) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('duplicate_error', true);
+            }
+            
             // Validate the request data
             $validated = $request->validate([
                 'name' => 'required|string|max:255',

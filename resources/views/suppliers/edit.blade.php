@@ -123,6 +123,9 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                         <p x-show="errors.name" x-text="errors.name" class="mt-1 text-sm text-red-500"></p>
+                        @if(session('duplicate_error'))
+                            <p class="mt-1 text-sm text-red-500">Deze bedrijfsnaam en dit e-mailadres zijn al in gebruik.</p>
+                        @endif
                     </div>
 
                     <div>
@@ -154,11 +157,17 @@
                         <input type="email" name="contact_email" id="contact_email" value="{{ old('contact_email', $supplier->contact_email) }}" required
                             x-model="form.contact_email"
                             @input="validateField('contact_email')"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring focus:ring-green focus:ring-opacity-50 @error('contact_email') border-red-500 @enderror">
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring focus:ring-green focus:ring-opacity-50 @error('contact_email') border-red-500 @enderror @if(session('email_error')) border-red-500 @endif">
                         @error('contact_email')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                         <p x-show="errors.contact_email" x-text="errors.contact_email" class="mt-1 text-sm text-red-500"></p>
+                        @if(session('email_error'))
+                            <p class="mt-1 text-sm text-red-500">{{ session('email_error') }}</p>
+                        @endif
+                        @if(session('duplicate_error'))
+                            <p class="mt-1 text-sm text-red-500">Deze bedrijfsnaam en dit e-mailadres zijn al in gebruik.</p>
+                        @endif
                     </div>
 
                     <div>
