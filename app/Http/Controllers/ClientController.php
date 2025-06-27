@@ -33,6 +33,7 @@ class ClientController extends Controller
                 ]
             );
 
+            //unhappy scenario
             return view('client.index', compact('clients'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Er is een fout opgetreden bij het laden van de cliënten: ' . $e->getMessage());
