@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
@@ -16,15 +13,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('comment')->nullable();
             $table->boolean('isactive')->default(true);
-            $table->timestamp('dateadded')->useCurrent();
-            $table->timestamp('datechanged')->useCurrent()->useCurrentOnUpdate();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('categories');
