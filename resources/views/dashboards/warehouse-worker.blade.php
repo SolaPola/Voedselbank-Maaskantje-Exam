@@ -104,11 +104,7 @@
             <div class="bg-white rounded-lg shadow p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Voorraadbeheer</h3>
                 <div class="space-y-3">
-<<<<<<< HEAD
-                    <a href="#"
-=======
                     <a href="{{ route('products.index') }}"
->>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
                         class="block w-full text-left px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
                         📦 Voorraad Bekijken
                     </a>

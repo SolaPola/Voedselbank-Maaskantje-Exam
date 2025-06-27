@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->bigInteger('phone');
+            $table->string('phone');
             $table->text('comment')->nullable();
             $table->boolean('isactive')->default(true);
             $table->timestamp('dateadded')->useCurrent();
