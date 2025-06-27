@@ -42,12 +42,22 @@ class FoodPackageController extends Controller
 
     public function update(Request $request, FoodPackage $foodpackage)
     {
+        // Pas validatie aan op basis van je velden
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            // Voeg hier andere velden toe indien nodig
+            'soort_voedselpakket' => 'nullable|string|max:255',
+            'gezinssamenstelling' => 'nullable|string|max:255',
+            'issued_at' => 'nullable|date',
+            'comment' => 'nullable|string|max:255',
+            'isactive' => 'required|boolean',
+            // Voeg andere velden toe indien nodig
         ]);
 
-        $foodpackage->update($validated);
+        $foodpackage->soort_voedselpakket = $validated['soort_voedselpakket'] ?? null;
+        $foodpackage->gezinssamenstelling = $validated['gezinssamenstelling'] ?? null;
+        $foodpackage->issued_at = $validated['issued_at'] ?? null;
+        $foodpackage->comment = $validated['comment'] ?? null;
+        $foodpackage->isactive = $validated['isactive'];
+        $foodpackage->save();
 
         return redirect()->route('foodpackages.index')->with('success', 'Voedselpakket bijgewerkt!');
     }
