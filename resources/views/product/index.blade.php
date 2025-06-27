@@ -154,7 +154,7 @@
                     <p class="text-2xl font-bold text-gray-900">{{ $expiringProducts }}</p>
                 </div>
             </div>
-        </div>
+        </div> //hi
         
         <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
             <div class="flex items-center">
