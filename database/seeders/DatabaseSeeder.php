@@ -434,7 +434,6 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
-<?php
 
 namespace Database\Seeders;
 
@@ -482,6 +481,61 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'volunteer',
             'email_verified_at' => now(),
+        ]);
+
+        // Seed Categories
+        Category::create([
+            'name' => 'Aardappelen, groente, fruit',
+            'comment' => 'Verse en ingeblikte aardappelen, groenten en fruit',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Kaas, vleeswaren',
+            'comment' => 'Verschillende soorten kaas en vleeswaren',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Zuivel, plantaardig en eieren',
+            'comment' => 'Melk, yoghurt, plantaardige alternatieven en eieren',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Bakkerij en banket',
+            'comment' => 'Brood, gebak en banketbakkerij producten',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Frisdrank, sappen, koffie en thee',
+            'comment' => 'Alle dranken inclusief warme dranken',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Pasta, rijst en wereldkeuken',
+            'comment' => 'Pasta, rijst en internationale gerechten',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Soepen, sauzen, kruiden en olie',
+            'comment' => 'Soepen, sauzen, kruiden en kookoliën',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Snoep, koek, chips en chocolade',
+            'comment' => 'Snacks, snoep en chocoladeproducten',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Baby, verzorging en hygiëne',
+            'comment' => 'Babyproducten en hygiëne artikelen',
+            'isactive' => true,
         ]);
 
 
