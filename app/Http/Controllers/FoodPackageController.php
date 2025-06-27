@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FoodPackage;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class FoodPackageController extends Controller
@@ -21,11 +22,38 @@ class FoodPackageController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            // Voeg hier andere velden toe indien nodig
+            'client_name' => 'required|string|max:255',
+            'soort_voedselpakket' => 'nullable|string|max:255',
+            'gezinssamenstelling' => 'nullable|string|max:255',
+            'issued_at' => 'nullable|date',
+            'comment' => 'nullable|string|max:255',
+            'isactive' => 'required|boolean',
         ]);
 
-        FoodPackage::create($validated);
+        // Zoek of maak de client op naam
+        $client = Client::firstOrCreate(
+            ['name' => $validated['client_name']],
+            [
+                'name' => $validated['client_name'],
+                'address' => '', // <-- voeg lege string toe voor verplichte velden
+                'postal_code' => '',
+                'phone' => '',
+                'email' => '',
+                'adults' => 0,
+                'children' => 0,
+                'babies' => 0,
+                // voeg andere verplichte velden toe indien nodig
+            ]
+        );
+
+        $foodpackage = new FoodPackage();
+        $foodpackage->client_id = $client->id;
+        $foodpackage->soort_voedselpakket = $validated['soort_voedselpakket'] ?? null;
+        $foodpackage->gezinssamenstelling = $validated['gezinssamenstelling'] ?? null;
+        $foodpackage->issued_at = $validated['issued_at'] ?? null;
+        $foodpackage->comment = $validated['comment'] ?? null;
+        $foodpackage->isactive = $validated['isactive'];
+        $foodpackage->save();
 
         return redirect()->route('foodpackages.index')->with('success', 'Voedselpakket aangemaakt!');
     }
