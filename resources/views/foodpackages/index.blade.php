@@ -31,7 +31,7 @@
                         <tbody>
                             @foreach($foodpackages as $foodpackage)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-2 border-b">{{ $foodpackage->name }}</td>
+                                    <td class="px-4 py-2 border-b">{{ $foodpackage->clientid }}</td>
                                     <td class="px-4 py-2 border-b">{{ $foodpackage->created_at ? $foodpackage->created_at->format('d-m-Y') : '-' }}</td>
                                     <td class="px-4 py-2 border-b space-x-2">
                                         <a href="{{ route('foodpackages.show', $foodpackage) }}"
