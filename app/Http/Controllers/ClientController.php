@@ -143,10 +143,10 @@ class ClientController extends Controller
     {
         try {
             $client = Client::findOrFail($id);
-            
+
             // Store client name for feedback message
             $clientName = $client->name;
-            
+
             $client->delete();
 
             return redirect()->route('clients.index')->with('success', "Cliënt '{$clientName}' is succesvol verwijderd!");
