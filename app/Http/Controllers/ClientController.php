@@ -79,6 +79,9 @@ class ClientController extends Controller
                 'comment' => 'nullable|string|max:1000',
             ]);
 
+            // Convert phone to integer, removing any non-numeric characters
+            $validatedData['phone'] = (int) preg_replace('/\D/', '', $validatedData['phone']);
+
             Client::create($validatedData);
 
             return redirect()->route('clients.index')->with('success', 'Cliënt succesvol toegevoegd!');
@@ -124,6 +127,9 @@ class ClientController extends Controller
                 'babies' => 'required|integer|min:0|max:10',
                 'comment' => 'nullable|string|max:1000',
             ]);
+
+            // Convert phone to integer, removing any non-numeric characters
+            $validatedData['phone'] = (int) preg_replace('/\D/', '', $validatedData['phone']);
 
             $client->update($validatedData);
 

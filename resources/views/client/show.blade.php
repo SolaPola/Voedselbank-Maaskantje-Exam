@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
         }
     </script>
 </head>
+
 <body class="bg-gray-100 min-h-screen">
     <header class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,7 +33,8 @@
                     <span class="text-gray-700">{{ Auth::user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+                        <button type="submit"
+                            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
                             Uitloggen
                         </button>
                     </form>
@@ -94,33 +97,34 @@
                     </div>
                     <div class="mt-4 pt-4 border-t">
                         <p class="text-sm text-gray-600">
-                            <strong>Totaal gezinsleden:</strong> {{ $client->adults + $client->children + $client->babies }}
+                            <strong>Totaal gezinsleden:</strong>
+                            {{ $client->adults + $client->children + $client->babies }}
                         </p>
                     </div>
                 </div>
 
-                @if($client->comment)
-                <div class="bg-white rounded-lg shadow border-t-4 border-yellow-500 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Opmerkingen</h3>
-                    <p class="text-sm text-gray-700">{{ $client->comment }}</p>
-                </div>
+                @if ($client->comment)
+                    <div class="bg-white rounded-lg shadow border-t-4 border-yellow-500 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Opmerkingen</h3>
+                        <p class="text-sm text-gray-700">{{ $client->comment }}</p>
+                    </div>
                 @endif
             </div>
 
-     
+
             <div class="space-y-6">
                 <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Acties</h3>
                     <div class="space-y-3">
-                        <a href="{{ route('clients.edit', $client->id) }}" 
+                        <a href="{{ route('clients.edit', $client->id) }}"
                             class="block w-full text-center px-4 py-2 bg-green text-white rounded-lg hover:bg-green-700 transition">
                             Bewerken
                         </a>
-                        <form method="POST" action="{{ route('clients.destroy', $client->id) }}" 
-                              onsubmit="return confirm('Weet je zeker dat je deze cliënt wilt verwijderen?')">
+                        <form method="POST" action="{{ route('clients.destroy', $client->id) }}"
+                            onsubmit="return confirm('Weet je zeker dat je deze cliënt wilt verwijderen?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" 
+                            <button type="submit"
                                 class="block w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
                                 Verwijderen
                             </button>
@@ -130,8 +134,9 @@
 
                 <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Voedingsvoorkeur</h3>
-                    @if($client->preference)
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                    @if ($client->preference)
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                             {{ $client->preference }}
                         </span>
                     @else
@@ -144,8 +149,9 @@
                     <div class="space-y-2 text-sm">
                         <p><strong>Aangemaakt:</strong> {{ $client->created_at->format('d-m-Y') }}</p>
                         <p><strong>Laatst gewijzigd:</strong> {{ $client->updated_at->format('d-m-Y') }}</p>
-                        <p><strong>Status:</strong> 
-                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <p><strong>Status:</strong>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                 Actief
                             </span>
                         </p>
@@ -155,4 +161,5 @@
         </div>
     </main>
 </body>
+
 </html>
