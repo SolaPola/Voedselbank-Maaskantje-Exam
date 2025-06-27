@@ -41,7 +41,10 @@
         </form>
         
         <div class="flex items-center">
-            <p class="ml-4 text-sm text-gray-600">
+            <a href="{{ route('products.create') }}" class="bg-orange text-white px-4 py-2 rounded-md hover:bg-orange-700 transition mr-4">
+                <i class="fa fa-plus mr-2"></i> Nieuw Product
+            </a>
+            <p class="text-sm text-gray-600">
                 Totaal: <span class="font-bold">{{ $products->total() }}</span> producten
             </p>
         </div>

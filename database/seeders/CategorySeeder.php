@@ -48,7 +48,31 @@ class CategorySeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-      
+        // Seed Categories
+        Category::create([
+            'name' => 'Granen & Brood',
+            'comment' => 'Brood, rijst, pasta, granen',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Groenten & Fruit',
+            'comment' => 'Verse en ingeblikte groenten en fruit',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Zuivel',
+            'comment' => 'Melk, kaas, yoghurt',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Vlees & Vis',
+            'comment' => 'Vlees, vis, kip',
+            'isactive' => true,
+        ]);
+
         // Seed Suppliers
         Supplier::create([
             'name' => 'Albert Heijn Distributie',

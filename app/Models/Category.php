@@ -13,14 +13,10 @@ class Category extends Model
         'name',
         'comment',
         'isactive',
-        'dateadded',
-        'datechanged',
     ];
 
     protected $casts = [
         'isactive' => 'boolean',
-        'dateadded' => 'datetime',
-        'datechanged' => 'datetime',
     ];
 
     public function products()

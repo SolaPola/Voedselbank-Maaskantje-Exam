@@ -35,6 +35,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'warehouse.worker'])->group(function () {
     Route::get('/warehouse/dashboard', [WarehouseWorkerDashboardController::class, 'index'])->name('warehouse.dashboard');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 });
 
 Route::middleware(['auth', 'volunteer'])->group(function () {

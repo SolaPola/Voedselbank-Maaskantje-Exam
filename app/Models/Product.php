@@ -17,26 +17,22 @@ class Product extends Model
         'expiry_date',
         'comment',
         'isactive',
-        'dateadded',
-        'datechanged',
     ];
 
     protected $casts = [
         'expiry_date' => 'date',
         'isactive' => 'boolean',
-        'dateadded' => 'datetime',
-        'datechanged' => 'datetime',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'categoriesid');
-    }
+public function category()
+{
+    return $this->belongsTo(Category::class, 'categoriesid');
+}
 
-    public function deliveries()
-    {
-        return $this->hasMany(Delivery::class);
-    }
+public function deliveries()
+{
+    return $this->hasMany(Delivery::class);
+}
 
     public function packageItems()
     {
