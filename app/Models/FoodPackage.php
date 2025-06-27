@@ -11,6 +11,8 @@ class FoodPackage extends Model
 
     protected $fillable = [
         'client_id',
+        'soort_voedselpakket',
+        'gezinssamenstelling',
         'issued_at',
         'comment',
         'isactive',

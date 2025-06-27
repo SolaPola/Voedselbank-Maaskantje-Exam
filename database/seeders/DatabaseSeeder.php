@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
+
         // Seed Categories
         Category::create([
             'name' => 'Granen & Brood',
@@ -74,6 +75,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Seed Suppliers with more realistic data
+
         Supplier::create([
             'name' => 'Albert Heijn Distributie',
             'address' => 'Provincialeweg 11, 1506 MA Zaandam',
@@ -130,50 +132,68 @@ class DatabaseSeeder extends Seeder
             'isactive' => true,
         ]);
 
-        // Seed Products
+        
+
+
+
+// Seed Categories
+$category1 = Category::create([
+    'name' => 'Brood',
+    'comment' => 'Alle soorten brood',
+    'isactive' => true,
+]);
+$category2 = Category::create([
+    'name' => 'Fruit',
+    'comment' => 'Vers fruit',
+    'isactive' => true,
+]);
+        $category3 = Category::create([
+            'name' => 'Zuivel',
+            'comment' => 'Melk en zuivelproducten',
+            'isactive' => true,
+            ]);
+
+// Seed Products
         Product::create([
             'name' => 'Wit Brood',
-            'categoryid' => 1,
+            'categoriesid' => $category1->id,
             'ean_code' => '8710398501301',
-            'category' => 'Granen & Brood',
             'stock' => 50,
             'expiry_date' => now()->addDays(3),
             'comment' => 'Vers wit brood',
             'isactive' => true,
-        ]);
+            ]);
 
         Product::create([
             'name' => 'Rijst 1kg',
-            'categoryid' => 1,
+            'categoriesid' => $category1->id,
             'ean_code' => '8712566321456',
-            'category' => 'Granen & Brood',
             'stock' => 100,
             'expiry_date' => now()->addMonths(12),
             'comment' => 'Basmati rijst',
             'isactive' => true,
-        ]);
+            ]);
 
         Product::create([
             'name' => 'Bananen',
-            'categoryid' => 2,
+            'categoriesid' => $category2->id,
             'ean_code' => '8712345678901',
-            'category' => 'Groenten & Fruit',
             'stock' => 25,
             'expiry_date' => now()->addDays(5),
             'comment' => 'Verse bananen',
             'isactive' => true,
-        ]);
+            ]);
 
         Product::create([
             'name' => 'Melk 1L',
-            'categoryid' => 3,
+            'categoriesid' => $category3->id,
             'ean_code' => '8712345678902',
-            'category' => 'Zuivel',
             'stock' => 40,
             'expiry_date' => now()->addDays(7),
             'comment' => 'Volle melk',
             'isactive' => true,
-        ]);
+            ]);
+
 
         // Seed Clients - Multiple dummy clients (expanded to 50+ clients)
         Client::create([
@@ -382,6 +402,8 @@ class DatabaseSeeder extends Seeder
         // Seed Food Packages - Extended with more packages for different clients
         $foodPackage1 = FoodPackage::create([
             'client_id' => 1,
+            'soort_voedselpakket' => 'vegatarisch',
+            'gezinssamenstelling' => '2 volwassenen, 2 kinderen',
             'issued_at' => now(),
             'comment' => 'Wekelijks pakket voor gezin',
             'isactive' => true,
@@ -389,6 +411,8 @@ class DatabaseSeeder extends Seeder
 
         $foodPackage2 = FoodPackage::create([
             'client_id' => 2,
+            'soort_voedselpakket' => 'eten',
+            'gezinssamenstelling' => '1 volwassene',
             'issued_at' => now()->subDays(1),
             'comment' => 'Basispakket voor 1 persoon',
             'isactive' => true,
