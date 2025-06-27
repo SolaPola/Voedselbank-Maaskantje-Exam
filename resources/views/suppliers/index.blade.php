@@ -47,36 +47,31 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h2 class="text-3xl font-bold text-gray-900">Leveranciers Overzicht</h2>
-                <p class="text-gray-600 mt-2">Alle actieve leveranciers met hun contactgegevens en leveringsinformatie
-                </p>
-                <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
+        <div class="mb-6">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900">Leveranciers Overzicht</h2>
+                    <p class="text-gray-600 mt-2">Alle actieve leveranciers met hun contactgegevens en leveringsinformatie
+                    </p>
+                    <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
+                </div>
+                <a href="{{ route('suppliers.create') }}"
+                    class="bg-green text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                    + Nieuwe Leverancier
+                </a>
             </div>
-            <a href="{{ route('suppliers.create') }}"
-                class="bg-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded flex items-center">
-                <span class="mr-1">+</span> Nieuwe Leverancier
-            </a>
         </div>
 
-        @if(session('success'))
-        <div class="mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded-lg">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm text-green-700">
-                        {{ session('success') }}
-                    </p>
-                </div>
+        @if (session('success'))
+            <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {{ session('success') }}
             </div>
-        </div>
+        @endif
+
+        @if (session('error'))
+            <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                {{ session('error') }}
+            </div>
         @endif
 
         @if($error)
@@ -105,26 +100,64 @@
             </div>
         </div>
         @else
-        <!-- Stats and Add Button -->
-        <div class="mb-6 flex justify-between items-center">
-            <div class="bg-white p-4 rounded-lg shadow border-l-4 border-orange flex-grow mr-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <div class="p-3 bg-green-100 rounded-full">
-                            <svg class="w-6 h-6 text-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-sm font-medium text-gray-500">Totaal Actieve Leveranciers</h3>
-                            <p class="text-2xl font-bold text-gray-900">{{ $suppliers->total() }}</p>
-                        </div>
+        <!-- Filter Section -->
+        <div class="mb-6 bg-white p-4 rounded-lg shadow border-l-4 border-green">
+            <form method="GET" action="{{ route('suppliers.index') }}" class="flex items-center space-x-4">
+                <div class="flex-1">
+                    <label for="delivery_date" class="block text-sm font-medium text-gray-700 mb-2">Filter op
+                        Leveringsdatum</label>
+                    <select id="delivery_date" name="delivery_date"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent">
+                        <option value="all" {{ ($deliveryFilter ?? 'all') === 'all' ? 'selected' : '' }}>Alle
+                            leveringen</option>
+                        @foreach ($allDeliveryOptions as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ ($deliveryFilter ?? '') === $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex space-x-2 pt-6">
+                    <button type="submit"
+                        class="bg-green text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                        Filter
+                    </button>
+                    @if ($deliveryFilter && $deliveryFilter !== 'all')
+                        <a href="{{ route('suppliers.index') }}"
+                            class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                            Reset
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
+        <!-- Stats -->
+        <div class="mb-6 bg-white p-4 rounded-lg shadow border-l-4 border-orange">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-100 rounded-full">
+                        <svg class="w-6 h-6 text-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
                     </div>
-                    <div class="text-sm text-gray-600">
-                        Pagina {{ $suppliers->currentPage() }} van {{ $suppliers->lastPage() }}
-                        ({{ $suppliers->firstItem() ?? 0 }}-{{ $suppliers->lastItem() ?? 0 }})
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-500">
+                            @if ($deliveryFilter && $deliveryFilter !== 'all')
+                                Gefilterde Leveranciers
+                                ({{ $allDeliveryOptions[$deliveryFilter] }})
+                            @else
+                                Totaal Actieve Leveranciers
+                            @endif
+                        </h3>
+                        <p class="text-2xl font-bold text-gray-900">{{ $suppliers->total() }}</p>
                     </div>
+                </div>
+                <div class="text-sm text-gray-600">
+                    Pagina {{ $suppliers->currentPage() }} van {{ $suppliers->lastPage() }}
+                    ({{ $suppliers->firstItem() ?? 0 }}-{{ $suppliers->lastItem() ?? 0 }})
                 </div>
             </div>
         </div>
@@ -149,6 +182,8 @@
                                 Volgende Levering</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Opmerkingen</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Acties</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -188,11 +223,57 @@
                                         <span class="text-gray-400">Geen</span>
                                     @endif
                                 </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('suppliers.show', $supplier->id) }}"
+                                            class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-100 transition"
+                                            title="Bekijken">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                </path>
+                                            </svg>
+                                        </a>
+                                        <a href="{{ route('suppliers.edit', $supplier->id) }}"
+                                            class="text-green hover:text-green-700 p-1 rounded hover:bg-green-100 transition"
+                                            title="Bewerken">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                                </path>
+                                            </svg>
+                                        </a>
+                                        <form method="POST" action="{{ route('suppliers.destroy', $supplier->id) }}"
+                                            class="inline"
+                                            onsubmit="return confirm('Weet je zeker dat je deze leverancier wilt verwijderen?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition"
+                                                title="Verwijderen">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-6 py-8 text-center bg-red-50">
+                                <td colspan="8" class="px-6 py-8 text-center bg-red-50">
                                     <div class="flex flex-col items-center p-4 border border-red-200 rounded-lg bg-red-100">
+                                        <svg class="w-12 h-12 text-red-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
                                         <p class="text-red-700 font-bold text-lg">Geen leveranciers gevonden</p>
                                         <p class="text-red-600 mt-1">Er zijn momenteel geen actieve leveranciers in het systeem
                                         </p>
@@ -282,7 +363,6 @@
                                             <path fill-rule="evenodd"
                                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                                 clip-rule="evenodd" />
-                                        </svg>
                                     </a>
                                 @else
                                     <span
@@ -292,7 +372,6 @@
                                             <path fill-rule="evenodd"
                                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                                 clip-rule="evenodd" />
-                                        </svg>
                                     </span>
                                 @endif
                             </nav>

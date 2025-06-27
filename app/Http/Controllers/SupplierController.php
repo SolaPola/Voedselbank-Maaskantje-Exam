@@ -14,43 +14,47 @@ class SupplierController extends Controller
     /**
      * Display a listing of the suppliers
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            // Get current page for pagination
-            $currentPage = request()->get('page', 1);
-            $perPage = 10;
-
-            // Call the stored procedure
-            $suppliers = DB::select('CALL GetActiveSuppliers()');
+            $deliveryFilter = $request->input('delivery_date', 'all');
             
-            // Convert to collection for pagination
-            $collection = collect($suppliers);
+            $query = Supplier::where('isactive', true);
             
-            // Get the total count
-            $total = $collection->count();
+            // Apply delivery date filter if specified
+            if ($deliveryFilter !== 'all') {
+                if ($deliveryFilter === 'this_week') {
+                    $query->whereDate('next_delivery', '>=', now())
+                          ->whereDate('next_delivery', '<=', now()->addDays(7));
+                } elseif ($deliveryFilter === 'next_week') {
+                    $query->whereDate('next_delivery', '>', now()->addDays(7))
+                          ->whereDate('next_delivery', '<=', now()->addDays(14));
+                } elseif ($deliveryFilter === 'later') {
+                    $query->whereDate('next_delivery', '>', now()->addDays(14));
+                } elseif ($deliveryFilter === 'none') {
+                    $query->whereNull('next_delivery');
+                }
+            }
             
-            // Slice the collection for the current page
-            $currentPageItems = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+            // Get all unique delivery weeks for the filter dropdown
+            $allDeliveryOptions = [
+                'this_week' => 'Deze week',
+                'next_week' => 'Volgende week',
+                'later' => 'Later',
+                'none' => 'Niet gepland'
+            ];
             
-            // Create a paginator instance
-            $paginatedSuppliers = new LengthAwarePaginator(
-                $currentPageItems,
-                $total,
-                $perPage,
-                $currentPage,
-                ['path' => request()->url(), 'query' => request()->query()]
-            );
+            $suppliers = $query->orderBy('name')->paginate(10);
             
             return view('suppliers.index', [
-                'suppliers' => $paginatedSuppliers,
+                'suppliers' => $suppliers,
+                'allDeliveryOptions' => $allDeliveryOptions,
+                'deliveryFilter' => $deliveryFilter,
                 'error' => null
             ]);
         } catch (Exception $e) {
-            // Log the error
             Log::error('Error loading suppliers: ' . $e->getMessage());
             
-            // Return view with error message
             return view('suppliers.index', [
                 'suppliers' => null,
                 'error' => 'Er is een fout opgetreden bij het laden van het leveranciersoverzicht. Probeer het later opnieuw.'
@@ -101,6 +105,67 @@ class SupplierController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Er is een fout opgetreden bij het toevoegen van de leverancier.');
+        }
+    }
+    
+    /**
+     * Display the specified supplier
+     */
+    public function show(Supplier $supplier)
+    {
+        return view('suppliers.show', compact('supplier'));
+    }
+    
+    /**
+     * Show the form for editing the specified supplier
+     */
+    public function edit(Supplier $supplier)
+    {
+        return view('suppliers.edit', compact('supplier'));
+    }
+    
+    /**
+     * Update the specified supplier in storage
+     */
+    public function update(Request $request, Supplier $supplier)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'contact_name' => 'required|string|max:255',
+                'contact_email' => 'required|email|max:255',
+                'phone' => 'required|string|max:20',
+                'next_delivery' => 'nullable|date',
+                'comment' => 'nullable|string',
+            ]);
+            
+            $supplier->update($validated);
+            
+            return redirect()->route('suppliers.index')
+                ->with('success', 'Leverancier succesvol bijgewerkt.');
+        } catch (Exception $e) {
+            Log::error('Error updating supplier: ' . $e->getMessage());
+            
+            return back()->withInput()
+                ->with('error', 'Er is een fout opgetreden bij het bijwerken van de leverancier.');
+        }
+    }
+    
+    /**
+     * Remove the specified supplier from storage (soft delete)
+     */
+    public function destroy(Supplier $supplier)
+    {
+        try {
+            $supplier->update(['isactive' => false]);
+            
+            return redirect()->route('suppliers.index')
+                ->with('success', 'Leverancier succesvol verwijderd.');
+        } catch (Exception $e) {
+            Log::error('Error removing supplier: ' . $e->getMessage());
+            
+            return back()->with('error', 'Er is een fout opgetreden bij het verwijderen van de leverancier.');
         }
     }
 }
