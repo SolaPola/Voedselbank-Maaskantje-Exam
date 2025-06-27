@@ -24,6 +24,22 @@
         </div>
     @endif
 
+    <!-- Warning about EAN code changes -->
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm">
+                    <strong>Let op:</strong> Het wijzigen van de EAN code kan gevolgen hebben voor de voorraadregistratie. Wees voorzichtig bij het aanpassen van deze waarde.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <div class="bg-white shadow rounded-lg overflow-hidden border-t-4 border-green">
         <form action="{{ route('products.update', $product->id) }}" method="POST" class="p-6">
             @csrf
@@ -59,6 +75,7 @@
                 <div>
                     <label for="ean_code" class="block text-sm font-medium text-gray-700 mb-2">
                         EAN Code
+                        <span class="text-yellow-600 text-xs">(wees voorzichtig met wijzigen)</span>
                     </label>
                     <input type="text" name="ean_code" id="ean_code" value="{{ old('ean_code', $product->ean_code) }}"
                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
@@ -106,16 +123,41 @@
                     placeholder="Eventuele opmerkingen over het product...">{{ old('comment', $product->comment) }}</textarea>
             </div>
 
+            <!-- Product Information -->
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Product Informatie</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
+                    <div>
+                        <span class="font-medium">Aangemaakt:</span>
+                        {{ $product->created_at->format('d-m-Y H:i') }}
+                    </div>
+                    <div>
+                        <span class="font-medium">Laatst bijgewerkt:</span>
+                        {{ $product->updated_at->format('d-m-Y H:i') }}
+                    </div>
+                    <div>
+                        <span class="font-medium">Product ID:</span>
+                        #{{ $product->id }}
+                    </div>
+                </div>
+            </div>
+
             <!-- Form Actions -->
             <div class="mt-8 flex justify-between">
                 <a href="{{ route('products.index') }}" 
                    class="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600 transition">
                     Annuleren
                 </a>
-                <button type="submit" 
-                        class="bg-green text-white px-6 py-2 rounded-md hover:bg-green-700 transition">
-                    Product Bijwerken
-                </button>
+                <div class="flex space-x-3">
+                    <a href="{{ route('products.show', $product->id) }}" 
+                       class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
+                        Bekijk Details
+                    </a>
+                    <button type="submit" 
+                            class="bg-green text-white px-6 py-2 rounded-md hover:bg-green-700 transition">
+                        Product Bijwerken
+                    </button>
+                </div>
             </div>
         </form>
     </div>

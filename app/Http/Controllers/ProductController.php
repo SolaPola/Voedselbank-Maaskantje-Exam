@@ -221,9 +221,9 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:50',
             'categoriesid' => 'required|exists:categories,id',
-            'ean_code' => 'nullable|string|max:255',
+            'ean_code' => 'nullable|string|max:13',
             'stock' => 'required|integer|min:0',
             'expiry_date' => 'nullable|date',
             'comment' => 'nullable|string',
@@ -232,9 +232,40 @@ class ProductController extends Controller
 
         try {
             $product = Product::findOrFail($id);
-            $product->update($request->all());
+            $oldEanCode = $product->ean_code;
             
-            return redirect()->route('products.index')->with('success', 'Product succesvol bijgewerkt!');
+            // Check if EAN code is being changed and if the new EAN already exists
+            if (!empty($request->ean_code) && $request->ean_code !== $oldEanCode) {
+                $existingProduct = Product::where('ean_code', $request->ean_code)
+                                        ->where('isactive', true)
+                                        ->where('id', '!=', $id)
+                                        ->first();
+                
+                if ($existingProduct) {
+                    return back()->withInput()->with('error', 
+                        'EAN code "' . $request->ean_code . '" bestaat al voor product "' . $existingProduct->name . '". Kies een andere EAN code of laat het veld leeg.');
+                }
+            }
+            
+            // Update the product
+            $product->update([
+                'name' => $request->name,
+                'categoriesid' => $request->categoriesid,
+                'ean_code' => $request->ean_code,
+                'stock' => $request->stock,
+                'expiry_date' => $request->expiry_date,
+                'comment' => $request->comment,
+                'isactive' => $request->isactive,
+            ]);
+            
+            $successMessage = 'Product "' . $product->name . '" succesvol bijgewerkt!';
+            
+            // Add additional message if EAN code was changed
+            if ($request->ean_code !== $oldEanCode) {
+                $successMessage .= ' EAN code is gewijzigd van "' . ($oldEanCode ?: 'leeg') . '" naar "' . ($request->ean_code ?: 'leeg') . '".';
+            }
+            
+            return redirect()->route('products.index')->with('success', $successMessage);
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Er is een fout opgetreden bij het bijwerken van het product: ' . $e->getMessage());
         }
