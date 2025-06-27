@@ -23,7 +23,7 @@
             </ul>
         </div>
     @endif
-
+{{-- i love coding --}}
     <div class="bg-white shadow rounded-lg overflow-hidden border-t-4 border-green">
         <form action="{{ route('products.update', $product->id) }}" method="POST" class="p-6">
             @csrf
