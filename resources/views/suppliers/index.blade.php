@@ -63,14 +63,61 @@
         </div>
 
         @if (session('success'))
-            <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                {{ session('success') }}
+            <div id="success-alert" class="mb-6 bg-green-100 border-l-4 border-green-500 shadow-md p-4 rounded-lg animate-pulse">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-base font-medium text-green-800">{{ session('success') }}</p>
+                    </div>
+                </div>
             </div>
         @endif
 
         @if (session('error'))
-            <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                {{ session('error') }}
+            <div id="error-alert" class="mb-6 bg-red-100 border-l-4 border-red-500 shadow-md p-4 rounded-lg">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-red-800">Systeemfout</p>
+                        <p class="text-sm text-red-700">{{ session('error') }}</p>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <div class="-mx-1.5 -my-1.5">
+                            <button type="button" onclick="document.getElementById('error-alert').remove()" class="inline-flex bg-red-100 rounded-md p-1.5 text-red-500 hover:bg-red-200 focus:outline-none">
+                                <span class="sr-only">Sluiten</span>
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 pl-10">
+                    <div class="text-sm text-red-700">
+                        <p>Mogelijke oorzaken:</p>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Er is een probleem met de database verbinding</li>
+                            <li>De server is momenteel overbelast</li>
+                            <li>Er kan een tijdelijk technisch probleem zijn</li>
+                        </ul>
+                    </div>
+                    <div class="mt-3 flex space-x-3">
+                        <a href="{{ route('suppliers.create') }}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Probeer opnieuw
+                        </a>
+                        <button onclick="window.location.reload()" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Ververs pagina
+                        </button>
+                    </div>
+                </div>
             </div>
         @endif
 
@@ -382,6 +429,31 @@
         </div>
         @endif
     </main>
+
+    <script>
+        // Auto-hide alerts after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight the success message with animation
+            const successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                // Make it pulse gently
+                successAlert.classList.add('animate-pulse');
+                
+                // Add green glow effect
+                successAlert.style.boxShadow = '0 0 10px rgba(22, 101, 52, 0.5)';
+                
+                // Gradually fade out after 4 seconds
+                setTimeout(() => {
+                    successAlert.style.transition = 'opacity 1s, transform 1s';
+                    successAlert.style.opacity = '0';
+                    successAlert.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        successAlert.remove();
+                    }, 1000);
+                }, 4000);
+            }
+        });
+    </script>
 </body>
 
 </html>
