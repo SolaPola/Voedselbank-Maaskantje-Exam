@@ -82,7 +82,7 @@ class ClientController extends Controller
             Client::create($validatedData);
 
             return redirect()->route('clients.index')->with('success', 'Cliënt succesvol toegevoegd!');
-        } catch (\Exception $e) {
+        } catch (\Exception $e) {   
             return redirect()->back()->withInput()->with('error', 'Er is een fout opgetreden bij het toevoegen van de cliënt: ' . $e->getMessage());
         }
     }
