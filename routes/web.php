@@ -7,9 +7,8 @@ use App\Http\Controllers\VolunteerDashboardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FoodPackageController;
 use App\Http\Controllers\SupplierController;
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FoodPackageController;
+
 
 Route::get('/', function () {
     return view('welcome');

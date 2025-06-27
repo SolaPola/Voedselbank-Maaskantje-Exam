@@ -421,6 +421,8 @@ $category2 = Category::create([
         // Additional food packages for first client (Familie de Vries)
         $foodPackage3 = FoodPackage::create([
             'client_id' => 1,
+            'soort_voedselpakket' => 'vegatarisch',
+            'gezinssamenstelling' => '2 volwassenen, 2 kinderen',
             'issued_at' => now()->subDays(7),
             'comment' => 'Vorige week pakket',
             'isactive' => true,
@@ -428,6 +430,8 @@ $category2 = Category::create([
 
         $foodPackage4 = FoodPackage::create([
             'client_id' => 1,
+            'soort_voedselpakket' => 'vegatarisch',
+            'gezinssamenstelling' => '2 volwassenen, 2 kinderen',
             'issued_at' => now()->subDays(14),
             'comment' => 'Twee weken geleden pakket',
             'isactive' => true,
@@ -435,6 +439,8 @@ $category2 = Category::create([
 
         $foodPackage5 = FoodPackage::create([
             'client_id' => 1,
+            'soort_voedselpakket' => 'vegatarisch',
+            'gezinssamenstelling' => '2 volwassenen, 2 kinderen',
             'issued_at' => now()->subDays(21),
             'comment' => 'Drie weken geleden pakket',
             'isactive' => true,
@@ -443,6 +449,8 @@ $category2 = Category::create([
         // Food packages for other clients
         $foodPackage6 = FoodPackage::create([
             'client_id' => 3,
+            'soort_voedselpakket' => 'halal',
+            'gezinssamenstelling' => '2 volwassenen, 1 kind, 1 baby',
             'issued_at' => now()->subDays(2),
             'comment' => 'Halal pakket voor Familie Bakker',
             'isactive' => true,
@@ -450,6 +458,8 @@ $category2 = Category::create([
 
         $foodPackage7 = FoodPackage::create([
             'client_id' => 3,
+            'soort_voedselpakket' => 'halal',
+            'gezinssamenstelling' => '2 volwassenen, 1 kind, 1 baby',
             'issued_at' => now()->subDays(9),
             'comment' => 'Vorige week halal pakket',
             'isactive' => true,
@@ -457,6 +467,8 @@ $category2 = Category::create([
 
         $foodPackage8 = FoodPackage::create([
             'client_id' => 4,
+            'soort_voedselpakket' => 'standaard',
+            'gezinssamenstelling' => '1 volwassene, 3 kinderen',
             'issued_at' => now()->subDays(3),
             'comment' => 'Groot pakket voor alleenstaande vader',
             'isactive' => true,
