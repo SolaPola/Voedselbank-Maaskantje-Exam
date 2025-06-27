@@ -148,16 +148,25 @@ class SupplierController extends Controller
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
-                'contact_name' => 'required|string|max:255',
+                'contact_name' => 'required|string|max:100',
                 'contact_email' => 'required|email|max:255',
-                'phone' => 'required|string|max:20',
-                'next_delivery' => 'nullable|date',
-                'comment' => 'nullable|string',
+                'phone' => 'required|string|max:20|regex:/^[0-9\s\-\+\(\)\.]+$/',
+                'next_delivery' => 'nullable|date|after_or_equal:today',
+                'comment' => 'nullable|string|max:1000',
+            ], [
+                'name.required' => 'De naam van de leverancier is verplicht.',
+                'address.required' => 'Het adres van de leverancier is verplicht.',
+                'contact_name.required' => 'De naam van de contactpersoon is verplicht.',
+                'contact_email.required' => 'Het e-mailadres is verplicht.',
+                'contact_email.email' => 'Vul een geldig e-mailadres in.',
+                'phone.required' => 'Het telefoonnummer is verplicht.',
+                'phone.regex' => 'Vul een geldig telefoonnummer in (alleen cijfers, spaties en de tekens + - ( ) . zijn toegestaan).',
+                'next_delivery.after_or_equal' => 'De leveringsdatum moet vandaag of in de toekomst zijn.',
             ]);
             
             $supplier->update($validated);
             
-            return redirect()->route('suppliers.index')
+            return redirect()->route('suppliers.edit', $supplier)
                 ->with('success', 'Leverancier succesvol bijgewerkt.');
         } catch (Exception $e) {
             Log::error('Error updating supplier: ' . $e->getMessage());
