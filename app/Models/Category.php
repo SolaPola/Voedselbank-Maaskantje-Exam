@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'comment',
+        'isactive',
+        'dateadded',
+        'datechanged',
+    ];
+
+    protected $casts = [
+        'isactive' => 'boolean',
+        'dateadded' => 'datetime',
+        'datechanged' => 'datetime',
+    ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'categoryid');
+    }
+}
