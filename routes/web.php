@@ -30,6 +30,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::resource('foodpackages', FoodPackageController::class);
+    Route::get('/foodpackages', [FoodPackageController::class, 'index'])->name('foodpackages.index');
+    Route::get('/foodpackages/create', [FoodPackageController::class, 'create'])->name('foodpackages.create');
+    Route::post('/foodpackages', [FoodPackageController::class, 'store'])->name('foodpackages.store');
+    Route::get('/foodpackages/{foodpackage}', [FoodPackageController::class, 'show'])->name('foodpackages.show');
+    Route::get('/foodpackages/{foodpackage}/edit', [FoodPackageController::class, 'edit'])->name('foodpackages.edit');
 });
 
 Route::middleware(['auth', 'warehouse.worker'])->group(function () {

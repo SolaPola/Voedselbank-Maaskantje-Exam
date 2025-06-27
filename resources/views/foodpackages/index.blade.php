@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="max-w-6xl mx-auto py-8 px-4">
     <div class="bg-white shadow rounded-lg">
