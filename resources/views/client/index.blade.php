@@ -48,6 +48,7 @@
 
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
+<<<<<<< HEAD
             <div class="flex justify-between items-start">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900">Klanten Overzicht</h2>
@@ -106,6 +107,11 @@
                     @endif
                 </div>
             </form>
+=======
+            <h2 class="text-3xl font-bold text-gray-900">Cliënten Overzicht</h2>
+            <p class="text-gray-600 mt-2">Alle actieve cliënten met hun gegevens en uitgiftehistorie</p>
+            <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
+>>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
         </div>
 
         <!-- Stats -->
@@ -120,6 +126,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
+<<<<<<< HEAD
                         <h3 class="text-sm font-medium text-gray-500">
                             @if ($preferenceFilter && $preferenceFilter !== 'all')
                                 Gefilterde klanten
@@ -132,6 +139,9 @@
                                 Totaal Actieve klanten
                             @endif
                         </h3>
+=======
+                        <h3 class="text-sm font-medium text-gray-500">Totaal Actieve Cliënten</h3>
+>>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
                         <p class="text-2xl font-bold text-gray-900">{{ $clients->total() }}</p>
                     </div>
                 </div>
@@ -162,8 +172,11 @@
                                 Aantal Pakketten</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Wensen</th>
+<<<<<<< HEAD
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Acties</th>
+=======
+>>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -209,6 +222,7 @@
                                         <span class="text-gray-400">Geen</span>
                                     @endif
                                 </td>
+<<<<<<< HEAD
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
                                         <a href="{{ route('clients.show', $client->id) }}"
@@ -251,6 +265,13 @@
                             <tr>
                                 <td colspan="8" class="px-6 py-4 text-center text-gray-500">
                                     Geen klant gevonden
+=======
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                    Geen cliënten gevonden
+>>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
                                 </td>
                             </tr>
                         @endforelse
@@ -316,6 +337,10 @@
                                             <path fill-rule="evenodd"
                                                 d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                                 clip-rule="evenodd" />
+<<<<<<< HEAD
+=======
+                                        </svg>
+>>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
                                     </a>
                                 @endif
 
@@ -351,6 +376,10 @@
                                             <path fill-rule="evenodd"
                                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                                 clip-rule="evenodd" />
+<<<<<<< HEAD
+=======
+                                        </svg>
+>>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
                                     </span>
                                 @endif
                             </nav>
@@ -360,6 +389,7 @@
             </div>
         </div>
     </main>
+<<<<<<< HEAD
 
     <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
@@ -422,6 +452,8 @@
             }
         });
     </script>
+=======
+>>>>>>> origin/userstory-21-Bestaande-voorraad-verwijderen
 </body>
 
 </html>

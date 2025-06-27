@@ -11,10 +11,22 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-blue-600 hover:text-blue-700">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    
+                    @if(auth()->user()->role === 'warehouse_worker')
+                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')" class="text-blue-600 hover:text-blue-700">
+                            {{ __('Voorraad') }}
+                        </x-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')" class="text-blue-600 hover:text-blue-700">
+                            {{ __('Klanten') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -34,17 +46,16 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profile.edit')" class="text-blue-600 hover:text-blue-700">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                                                this.closest('form').submit();" class="text-blue-600 hover:text-blue-700">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>

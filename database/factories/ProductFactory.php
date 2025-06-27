@@ -33,6 +33,7 @@ class ProductFactory extends Factory
             'isactive' => true,
             'dateadded' => now(),
             'datechanged' => now(),
+
         ];
     }
 }
