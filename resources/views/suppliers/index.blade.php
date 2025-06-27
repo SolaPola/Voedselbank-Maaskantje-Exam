@@ -47,10 +47,17 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div class="mb-6">
-            <h2 class="text-3xl font-bold text-gray-900">Leveranciers Overzicht</h2>
-            <p class="text-gray-600 mt-2">Alle actieve leveranciers met hun contactgegevens en leveringsinformatie</p>
-            <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900">Leveranciers Overzicht</h2>
+                <p class="text-gray-600 mt-2">Alle actieve leveranciers met hun contactgegevens en leveringsinformatie
+                </p>
+                <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
+            </div>
+            <a href="{{ route('suppliers.create') }}"
+                class="bg-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded flex items-center">
+                <span class="mr-1">+</span> Nieuwe Leverancier
+            </a>
         </div>
 
         @if(session('success'))
@@ -120,13 +127,6 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('suppliers.create') }}" 
-               class="bg-green hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md flex items-center">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                Nieuwe Leverancier
-            </a>
         </div>
 
         <!-- Suppliers Table -->
@@ -194,7 +194,8 @@
                                 <td colspan="7" class="px-6 py-8 text-center bg-red-50">
                                     <div class="flex flex-col items-center p-4 border border-red-200 rounded-lg bg-red-100">
                                         <p class="text-red-700 font-bold text-lg">Geen leveranciers gevonden</p>
-                                        <p class="text-red-600 mt-1">Er zijn momenteel geen actieve leveranciers in het systeem</p>
+                                        <p class="text-red-600 mt-1">Er zijn momenteel geen actieve leveranciers in het systeem
+                                        </p>
                                     </div>
                                 </td>
                             </tr>
