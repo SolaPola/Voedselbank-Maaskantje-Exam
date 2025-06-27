@@ -12,17 +12,16 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         try {
-            // Call stored procedure to get client overview
+            //this calls the stored procedure
             $allClients = collect(DB::select('CALL GetClientOverview()'));
 
-            // Get current page from request, default to 1
+
             $currentPage = $request->get('page', 1);
             $perPage = 25;
 
-            // Slice the collection to get items for current page
             $currentPageItems = $allClients->slice(($currentPage - 1) * $perPage, $perPage)->values();
 
-            // Create paginator
+            //this is the pagination
             $clients = new LengthAwarePaginator(
                 $currentPageItems,
                 $allClients->count(),

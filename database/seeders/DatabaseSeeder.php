@@ -282,7 +282,7 @@ class DatabaseSeeder extends Seeder
             'isactive' => true,
         ]);
 
-        // Add 40+ more clients for pagination demonstration
+        // 40+ clients seeder 
         $additionalClients = [
             ['Familie van den Berg', 'Lange Putstraat 10', '5211 KW', '073-1111111', 'vandenberg2@email.com', null, 2, 3, 0, 'Groot gezin'],
             ['Mevrouw Willems', 'Sint Jansstraat 25', '5211 DA', '073-2222222', 'willems@email.com', 'Vegetarisch', 1, 0, 0, 'Senior dame'],
