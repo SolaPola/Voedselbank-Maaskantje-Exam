@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('food_packages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained('clients');
+            $table->string('soort_voedselpakket')->nullable();
+            $table->string('gezinssamenstelling')->nullable();
             $table->timestamp('issued_at')->nullable();
             $table->text('comment')->nullable();
             $table->boolean('isactive')->default(true);

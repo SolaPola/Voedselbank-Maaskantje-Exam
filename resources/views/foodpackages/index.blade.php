@@ -25,23 +25,23 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2 border-b text-left">Naam</th>
+                                <th class="px-4 py-2 border-b text-left">Soort Voedselpakket</th>
+                                <th class="px-4 py-2 border-b text-left">gezinssamenstelling</th>
                                 <th class="px-4 py-2 border-b text-left">Aangemaakt op</th>
                                 <th class="px-4 py-2 border-b text-left">Acties</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($foodpackages as $foodpackage)
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-2 border-b">{{ $foodpackage->clientid }}</td>
-                                    <td class="px-4 py-2 border-b">{{ $foodpackage->created_at ? $foodpackage->created_at->format('d-m-Y') : '-' }}</td>
-                                    <td class="px-4 py-2 border-b space-x-2">
-                                        <a href="{{ route('foodpackages.show', $foodpackage) }}"
-                                           class="inline-block px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition">
-                                            Bekijken
-                                        </a>
-                                        <a href="{{ route('foodpackages.edit', $foodpackage) }}"
-                                           class="inline-block px-3 py-1 bg-yellow-400 text-white text-xs rounded hover:bg-yellow-500 transition">
-                                            Bewerken
+                        @foreach($foodpackages as $foodpackage)
+                            <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 border-b">{{ $foodpackage->client->name ?? '-' }}</td>
+                            <td class="px-4 py-2 border-b">{{ $foodpackage->soort_voedselpakket ?? '-' }}</td>
+                            <td class="px-4 py-2 border-b">{{ $foodpackage->gezinssamenstelling ?? '-' }}</td>
+                            <td class="px-4 py-2 border-b">{{ $foodpackage->created_at ? $foodpackage->created_at->format('d-m-Y') : '-' }}</td>
+                            <td class="px-4 py-2 border-b space-x-2">
+                             <a href="{{ route('foodpackages.show', $foodpackage) }}"
+                                    class="inline-block px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition">
+                                    Bekijken
                                         </a>
                                         <form action="{{ route('foodpackages.destroy', $foodpackage) }}" method="POST" class="inline">
                                             @csrf
