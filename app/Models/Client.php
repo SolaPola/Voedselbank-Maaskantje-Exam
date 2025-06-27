@@ -15,6 +15,7 @@ class Client extends Model
         'postal_code',
         'phone',
         'email',
+        'preference',
         'adults',
         'children',
         'babies',
