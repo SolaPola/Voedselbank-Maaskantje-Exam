@@ -72,6 +72,35 @@
             </div>
         @endif
 
+        <!-- Filter Section -->
+        <div class="mb-6 bg-white p-4 rounded-lg shadow border-l-4 border-green">
+            <form method="GET" action="{{ route('clients.index') }}" class="flex items-center space-x-4">
+                <div class="flex-1">
+                    <label for="preference" class="block text-sm font-medium text-gray-700 mb-2">Filter op Voedingsvoorkeur</label>
+                    <select id="preference" name="preference" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent">
+                        <option value="all" {{ ($preferenceFilter ?? 'all') === 'all' ? 'selected' : '' }}>Alle voorkeuren</option>
+                        <option value="none" {{ ($preferenceFilter ?? '') === 'none' ? 'selected' : '' }}>Geen voorkeur</option>
+                        @foreach($allPreferences as $preference)
+                            <option value="{{ $preference }}" {{ ($preferenceFilter ?? '') === $preference ? 'selected' : '' }}>
+                                {{ $preference }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex space-x-2 pt-6">
+                    <button type="submit" class="bg-green text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                        Filter
+                    </button>
+                    @if($preferenceFilter && $preferenceFilter !== 'all')
+                        <a href="{{ route('clients.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                            Reset
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
         <!-- Stats -->
         <div class="mb-6 bg-white p-4 rounded-lg shadow border-l-4 border-orange">
             <div class="flex items-center justify-between">
@@ -84,7 +113,18 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <h3 class="text-sm font-medium text-gray-500">Totaal Actieve Cliënten</h3>
+                        <h3 class="text-sm font-medium text-gray-500">
+                            @if($preferenceFilter && $preferenceFilter !== 'all')
+                                Gefilterde Cliënten
+                                @if($preferenceFilter === 'none')
+                                    (Geen voorkeur)
+                                @else
+                                    ({{ $preferenceFilter }})
+                                @endif
+                            @else
+                                Totaal Actieve Cliënten
+                            @endif
+                        </h3>
                         <p class="text-2xl font-bold text-gray-900">{{ $clients->total() }}</p>
                     </div>
                 </div>
@@ -115,6 +155,8 @@
                                 Aantal Pakketten</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Wensen</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Acties</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -160,10 +202,41 @@
                                         <span class="text-gray-400">Geen</span>
                                     @endif
                                 </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('clients.show', $client->id) }}" 
+                                           class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-100 transition" 
+                                           title="Bekijken">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                        </a>
+                                        <a href="{{ route('clients.edit', $client->id) }}" 
+                                           class="text-green hover:text-green-700 p-1 rounded hover:bg-green-100 transition" 
+                                           title="Bewerken">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                            </svg>
+                                        </a>
+                                        <form method="POST" action="{{ route('clients.destroy', $client->id) }}" class="inline" 
+                                              onsubmit="return confirm('Weet je zeker dat je deze cliënt wilt verwijderen?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" 
+                                                    class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition" 
+                                                    title="Verwijderen">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                <td colspan="8" class="px-6 py-4 text-center text-gray-500">
                                     Geen cliënten gevonden
                                 </td>
                             </tr>
@@ -230,7 +303,6 @@
                                             <path fill-rule="evenodd"
                                                 d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                                 clip-rule="evenodd" />
-                                        </svg>
                                     </a>
                                 @endif
 
@@ -266,7 +338,6 @@
                                             <path fill-rule="evenodd"
                                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                                 clip-rule="evenodd" />
-                                        </svg>
                                     </span>
                                 @endif
                             </nav>
