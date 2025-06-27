@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\WarehouseWorkerDashboardController;
 use App\Http\Controllers\VolunteerDashboardController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +28,7 @@ Route::get('/dashboard', function () {
 // Role-specific dashboard routes
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/clients', [ClientController::class, 'index'])->name('clients.index');
 });
 
 Route::middleware(['auth', 'warehouse.worker'])->group(function () {
