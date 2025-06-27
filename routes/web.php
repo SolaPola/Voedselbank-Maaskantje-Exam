@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\WarehouseWorkerDashboardController;
 use App\Http\Controllers\VolunteerDashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FoodPackageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +28,8 @@ Route::get('/dashboard', function () {
 // Role-specific dashboard routes
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::resource('foodpackages', FoodPackageController::class);
 });
 
 Route::middleware(['auth', 'warehouse.worker'])->group(function () {
