@@ -111,7 +111,7 @@ class ClientController extends Controller
     {
         try {
             $client = Client::findOrFail($id);
-            
+
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'address' => 'required|string|max:500',
