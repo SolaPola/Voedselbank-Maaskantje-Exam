@@ -29,6 +29,8 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/admin/clients/create', [ClientController::class, 'create'])->name('clients.create');
+    Route::post('/admin/clients', [ClientController::class, 'store'])->name('clients.store');
 });
 
 Route::middleware(['auth', 'warehouse.worker'])->group(function () {
