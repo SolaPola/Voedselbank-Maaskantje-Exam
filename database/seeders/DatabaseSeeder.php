@@ -74,61 +74,61 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Seed Suppliers with more realistic data
-        Supplier::create([
-            'name' => 'Albert Heijn Distributie',
-            'address' => 'Provincialeweg 11, 1506 MA Zaandam',
-            'contact_name' => 'Jan Janssen',
-            'contact_email' => 'jan.janssen@ah.nl',
-            'phone' => '075-6591000',
-            'next_delivery' => now()->addDays(7),
-            'comment' => 'Hoofdleverancier voor verse producten',
-            'isactive' => true,
-        ]);
+        // Supplier::create([
+        //     'name' => 'Albert Heijn Distributie',
+        //     'address' => 'Provincialeweg 11, 1506 MA Zaandam',
+        //     'contact_name' => 'Jan Janssen',
+        //     'contact_email' => 'jan.janssen@ah.nl',
+        //     'phone' => '075-6591000',
+        //     'next_delivery' => now()->addDays(7),
+        //     'comment' => 'Hoofdleverancier voor verse producten',
+        //     'isactive' => true,
+        // ]);
 
-        Supplier::create([
-            'name' => 'Jumbo Foodservice',
-            'address' => 'Industrieweg 1, 5466 AE Veghel',
-            'contact_name' => 'Piet Pietersen',
-            'contact_email' => 'p.pietersen@jumbo.com',
-            'phone' => '0413-366000',
-            'next_delivery' => now()->addDays(5),
-            'comment' => 'Leverancier van houdbare producten',
-            'isactive' => true,
-        ]);
+        // Supplier::create([
+        //     'name' => 'Jumbo Foodservice',
+        //     'address' => 'Industrieweg 1, 5466 AE Veghel',
+        //     'contact_name' => 'Piet Pietersen',
+        //     'contact_email' => 'p.pietersen@jumbo.com',
+        //     'phone' => '0413-366000',
+        //     'next_delivery' => now()->addDays(5),
+        //     'comment' => 'Leverancier van houdbare producten',
+        //     'isactive' => true,
+        // ]);
         
-        // Add more suppliers for a realistic overview
-        Supplier::create([
-            'name' => 'Lokale Boerderij "De Groene Weide"',
-            'address' => 'Buitenweg 23, 5233 DE Maaskantje',
-            'contact_name' => 'Boer Henk',
-            'contact_email' => 'henk@groenweide.nl',
-            'phone' => '073-8765432',
-            'next_delivery' => now()->addDays(2),
-            'comment' => 'Levert verse groenten op maandag en donderdag',
-            'isactive' => true,
-        ]);
+        // // Add more suppliers for a realistic overview
+        // Supplier::create([
+        //     'name' => 'Lokale Boerderij "De Groene Weide"',
+        //     'address' => 'Buitenweg 23, 5233 DE Maaskantje',
+        //     'contact_name' => 'Boer Henk',
+        //     'contact_email' => 'henk@groenweide.nl',
+        //     'phone' => '073-8765432',
+        //     'next_delivery' => now()->addDays(2),
+        //     'comment' => 'Levert verse groenten op maandag en donderdag',
+        //     'isactive' => true,
+        // ]);
         
-        Supplier::create([
-            'name' => 'Bakkerij Van Doorn',
-            'address' => 'Dorpsstraat 12, 5235 FB Maaskantje',
-            'contact_name' => 'Klaas van Doorn',
-            'contact_email' => 'bakkerij@vandoorn.nl',
-            'phone' => '073-9876543',
-            'next_delivery' => now()->addDays(1),
-            'comment' => 'Dagelijkse levering van overgebleven brood',
-            'isactive' => true,
-        ]);
+        // Supplier::create([
+        //     'name' => 'Bakkerij Van Doorn',
+        //     'address' => 'Dorpsstraat 12, 5235 FB Maaskantje',
+        //     'contact_name' => 'Klaas van Doorn',
+        //     'contact_email' => 'bakkerij@vandoorn.nl',
+        //     'phone' => '073-9876543',
+        //     'next_delivery' => now()->addDays(1),
+        //     'comment' => 'Dagelijkse levering van overgebleven brood',
+        //     'isactive' => true,
+        // ]);
         
-        Supplier::create([
-            'name' => 'Groothandel Foodmax',
-            'address' => 'Industriestraat 45, 5301 GH Eindhoven',
-            'contact_name' => 'Sandra de Groot',
-            'contact_email' => 'sandra@foodmax.nl',
-            'phone' => '040-1234567',
-            'next_delivery' => now()->addDays(14),
-            'comment' => 'Tweewekelijkse levering van houdbare producten',
-            'isactive' => true,
-        ]);
+        // Supplier::create([
+        //     'name' => 'Groothandel Foodmax',
+        //     'address' => 'Industriestraat 45, 5301 GH Eindhoven',
+        //     'contact_name' => 'Sandra de Groot',
+        //     'contact_email' => 'sandra@foodmax.nl',
+        //     'phone' => '040-1234567',
+        //     'next_delivery' => now()->addDays(14),
+        //     'comment' => 'Tweewekelijkse levering van houdbare producten',
+        //     'isactive' => true,
+        // ]);
 
         // Seed Products
         Product::create([

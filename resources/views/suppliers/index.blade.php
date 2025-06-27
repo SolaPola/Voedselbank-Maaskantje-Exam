@@ -53,6 +53,32 @@
             <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
         </div>
 
+        @if($error)
+        <!-- Error Message -->
+        <div class="mb-6 bg-red-50 p-4 rounded-lg shadow border-l-4 border-red-500">
+            <div class="flex items-center">
+                <div class="p-2 bg-red-100 rounded-full">
+                    <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800">Systeemfout</h3>
+                    <div class="mt-1 text-sm text-red-700">
+                        {{ $error }}
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Terug naar dashboard
+                        </a>
+                        <button onclick="window.location.reload()" class="ml-3 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Probeer opnieuw
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
         <!-- Stats -->
         <div class="mb-6 bg-white p-4 rounded-lg shadow border-l-4 border-orange">
             <div class="flex items-center justify-between">
@@ -244,6 +270,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </main>
 </body>
 
