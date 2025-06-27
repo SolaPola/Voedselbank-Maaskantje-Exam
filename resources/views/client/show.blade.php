@@ -120,11 +120,15 @@
                             class="block w-full text-center px-4 py-2 bg-green text-white rounded-lg hover:bg-green-700 transition">
                             Bewerken
                         </a>
-                        <button type="button" 
-                                onclick="openDeleteModal({{ $client->id }}, '{{ $client->name }}')"
+                        <form method="POST" action="{{ route('clients.destroy', $client->id) }}"
+                            onsubmit="return confirm('Weet je zeker dat je deze cliënt wilt verwijderen?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
                                 class="block w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
-                            Verwijderen
-                        </button>
+                                Verwijderen
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -153,71 +157,43 @@
                         </p>
                     </div>
                 </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Vorige Leveringen</h3>
+                    @if($client->foodPackages->count() > 0)
+                        <div class="space-y-4">
+                            @foreach($client->foodPackages->sortByDesc('created_at') as $package)
+                                <div class="border-l-4 border-green p-3 bg-gray-50 rounded">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-medium">{{ $package->created_at->format('d-m-Y') }}</span>
+                                        <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">
+                                            {{ $package->packageItems->count() }} items
+                                        </span>
+                                    </div>
+                                    @if($package->packageItems->count() > 0)
+                                        <div class="mt-2 text-sm text-gray-600">
+                                            <p class="font-medium text-xs text-gray-500 mb-1">Producten:</p>
+                                            <div class="flex flex-wrap gap-1">
+                                                @foreach($package->packageItems->take(3) as $item)
+                                                    <span class="bg-gray-100 px-2 py-1 rounded text-xs">
+                                                        {{ $item->product_name }}
+                                                    </span>
+                                                @endforeach
+                                                @if($package->packageItems->count() > 3)
+                                                    <span class="text-xs text-gray-500">+{{ $package->packageItems->count() - 3 }} meer</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 text-sm italic">Geen vorige leveringen gevonden.</p>
+                    @endif
+                </div>
             </div>
         </div>
     </main>
-
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
-                        </path>
-                    </svg>
-                </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Cliënt Verwijderen</h3>
-                <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500">
-                        Weet je zeker dat je <span id="clientName" class="font-semibold"></span> wilt verwijderen?
-                        Deze actie kan niet ongedaan worden gemaakt.
-                    </p>
-                </div>
-                <div class="flex items-center justify-center gap-4 mt-4">
-                    <button onclick="closeDeleteModal()"
-                        class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md shadow-sm hover:bg-gray-400 transition">
-                        Annuleren
-                    </button>
-                    <form id="deleteForm" method="POST" action="" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 transition">
-                            Verwijderen
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openDeleteModal(clientId, clientName) {
-            document.getElementById('clientName').textContent = clientName;
-            document.getElementById('deleteForm').action = `/admin/clients/${clientId}`;
-            document.getElementById('deleteModal').classList.remove('hidden');
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.add('hidden');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('deleteModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeDeleteModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeDeleteModal();
-            }
-        });
-    </script>
 </body>
 
 </html>

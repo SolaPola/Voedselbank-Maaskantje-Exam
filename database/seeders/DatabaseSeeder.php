@@ -345,7 +345,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Seed Food Packages
+        // Seed Food Packages - Extended with more packages for different clients
         $foodPackage1 = FoodPackage::create([
             'client_id' => 1,
             'issued_at' => now(),
@@ -360,7 +360,51 @@ class DatabaseSeeder extends Seeder
             'isactive' => true,
         ]);
 
-        // Seed Package Items
+        // Additional food packages for first client (Familie de Vries)
+        $foodPackage3 = FoodPackage::create([
+            'client_id' => 1,
+            'issued_at' => now()->subDays(7),
+            'comment' => 'Vorige week pakket',
+            'isactive' => true,
+        ]);
+
+        $foodPackage4 = FoodPackage::create([
+            'client_id' => 1,
+            'issued_at' => now()->subDays(14),
+            'comment' => 'Twee weken geleden pakket',
+            'isactive' => true,
+        ]);
+
+        $foodPackage5 = FoodPackage::create([
+            'client_id' => 1,
+            'issued_at' => now()->subDays(21),
+            'comment' => 'Drie weken geleden pakket',
+            'isactive' => true,
+        ]);
+
+        // Food packages for other clients
+        $foodPackage6 = FoodPackage::create([
+            'client_id' => 3,
+            'issued_at' => now()->subDays(2),
+            'comment' => 'Halal pakket voor Familie Bakker',
+            'isactive' => true,
+        ]);
+
+        $foodPackage7 = FoodPackage::create([
+            'client_id' => 3,
+            'issued_at' => now()->subDays(9),
+            'comment' => 'Vorige week halal pakket',
+            'isactive' => true,
+        ]);
+
+        $foodPackage8 = FoodPackage::create([
+            'client_id' => 4,
+            'issued_at' => now()->subDays(3),
+            'comment' => 'Groot pakket voor alleenstaande vader',
+            'isactive' => true,
+        ]);
+
+        // Seed Package Items - Extended with more variety
         PackageItem::create([
             'food_package_id' => $foodPackage1->id,
             'product_id' => 1,
@@ -380,11 +424,169 @@ class DatabaseSeeder extends Seeder
         ]);
 
         PackageItem::create([
+            'food_package_id' => $foodPackage1->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 2,
+            'comment' => '2 trossen bananen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage1->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 3,
+            'comment' => '3 pakken melk',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
             'food_package_id' => $foodPackage2->id,
             'product_id' => 3,
             'product_name' => 'Bananen',
             'amount' => 1,
             'comment' => '1 tros bananen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage2->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 1,
+            'comment' => '1 brood',
+            'isactive' => true,
+        ]);
+
+        // Package items for foodPackage3 (week ago)
+        PackageItem::create([
+            'food_package_id' => $foodPackage3->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 2,
+            'comment' => 'Wekelijks brood',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage3->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 1,
+            'comment' => 'Basis rijst',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage3->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 2,
+            'comment' => 'Melk voor gezin',
+            'isactive' => true,
+        ]);
+
+        // Package items for foodPackage4 (2 weeks ago)
+        PackageItem::create([
+            'food_package_id' => $foodPackage4->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 3,
+            'comment' => 'Extra brood',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage4->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 1,
+            'comment' => 'Fruit voor kinderen',
+            'isactive' => true,
+        ]);
+
+        // Package items for foodPackage5 (3 weeks ago)
+        PackageItem::create([
+            'food_package_id' => $foodPackage5->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 2,
+            'comment' => 'Dubbele portie rijst',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage5->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 4,
+            'comment' => 'Veel melk voor groot gezin',
+            'isactive' => true,
+        ]);
+
+        // Package items for Familie Bakker (halal)
+        PackageItem::create([
+            'food_package_id' => $foodPackage6->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 1,
+            'comment' => 'Halal rijst',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage6->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 2,
+            'comment' => 'Fruit voor baby',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage7->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 2,
+            'comment' => 'Halal brood',
+            'isactive' => true,
+        ]);
+
+        // Package items for alleenstaande vader
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 1,
+            'product_name' => 'Wit Brood',
+            'amount' => 4,
+            'comment' => 'Veel brood voor 3 kinderen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 2,
+            'product_name' => 'Rijst 1kg',
+            'amount' => 2,
+            'comment' => 'Basisvoeding',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 3,
+            'product_name' => 'Bananen',
+            'amount' => 3,
+            'comment' => 'Fruit voor kinderen',
+            'isactive' => true,
+        ]);
+
+        PackageItem::create([
+            'food_package_id' => $foodPackage8->id,
+            'product_id' => 4,
+            'product_name' => 'Melk 1L',
+            'amount' => 5,
+            'comment' => 'Veel melk voor groot gezin',
             'isactive' => true,
         ]);
 
