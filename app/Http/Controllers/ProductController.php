@@ -117,8 +117,8 @@ class ProductController extends Controller
                 }
             }
             
-            // Create new product if no existing EAN code found
-            Product::create([
+            // Create new product - this will be used as temporary storage
+            $newProduct = Product::create([
                 'name' => $request->name,
                 'categoriesid' => $request->categoriesid,
                 'ean_code' => $request->ean_code,
@@ -127,6 +127,47 @@ class ProductController extends Controller
                 'comment' => $request->comment,
                 'isactive' => $request->isactive,
             ]);
+
+            // After creation, check again for duplicates with the same EAN code
+            if (!empty($request->ean_code)) {
+                $duplicateProducts = Product::where('ean_code', $request->ean_code)
+                                          ->where('isactive', true)
+                                          ->orderBy('created_at', 'asc')
+                                          ->get();
+                
+                if ($duplicateProducts->count() > 1) {
+                    // Keep the first (oldest) product and merge data
+                    $keepProduct = $duplicateProducts->first();
+                    $totalStock = $duplicateProducts->sum('stock');
+                    
+                    // Find the earliest expiry date
+                    $earliestExpiry = $duplicateProducts->whereNotNull('expiry_date')
+                                                       ->min('expiry_date');
+                    
+                    // Combine all comments
+                    $allComments = $duplicateProducts->whereNotNull('comment')
+                                                    ->pluck('comment')
+                                                    ->filter()
+                                                    ->unique()
+                                                    ->implode(' | ');
+                    
+                    // Update the kept product with combined data
+                    $keepProduct->update([
+                        'stock' => $totalStock,
+                        'expiry_date' => $earliestExpiry ?: $keepProduct->expiry_date,
+                        'comment' => $allComments ?: $keepProduct->comment,
+                    ]);
+                    
+                    // Delete all duplicate products except the first one
+                    Product::where('ean_code', $request->ean_code)
+                           ->where('isactive', true)
+                           ->where('id', '!=', $keepProduct->id)
+                           ->delete();
+                    
+                    return redirect()->route('products.index')->with('success', 
+                        'Product geconsolideerd! Duplicaten samengevoegd. "' . $keepProduct->name . '" heeft nu voorraad: ' . $keepProduct->stock);
+                }
+            }
 
             return redirect()->route('products.index')->with('success', 'Nieuw product succesvol toegevoegd!');
         } catch (\Exception $e) {
