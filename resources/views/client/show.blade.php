@@ -48,7 +48,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Main Info -->
+            {{-- relevent information --}}
             <div class="lg:col-span-2 space-y-6">
                 <div class="bg-white rounded-lg shadow border-t-4 border-green p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Persoonlijke Gegevens</h3>
@@ -107,7 +107,7 @@
                 @endif
             </div>
 
-            <!-- Sidebar -->
+     
             <div class="space-y-6">
                 <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Acties</h3>
