@@ -104,7 +104,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex space-x-2">
-                                    <a href="#" class="text-blue-600 hover:text-blue-900">
+                                    <a href="{{ route('products.show', $product->id) }}" class="text-blue-600 hover:text-blue-900">
                                         Details
                                     </a>
                                 </div>
