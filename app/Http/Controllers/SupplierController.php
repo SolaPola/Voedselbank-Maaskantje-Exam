@@ -14,7 +14,7 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::where('isactive', true)
             ->orderBy('name')
-            ->get();
+            ->paginate(10); // Add pagination with 10 items per page
         
         return view('suppliers.index', compact('suppliers'));
     }
