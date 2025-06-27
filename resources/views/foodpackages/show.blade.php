@@ -38,16 +38,6 @@
                 <h2 class="text-3xl font-bold text-gray-900">Voedselpakket Details</h2>
                 <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
             </div>
-            <form class="flex space-x-2" method="GET">
-                <button type="submit" formaction="{{ route('foodpackages.edit', $foodpackage) }}"
-                    class="bg-orange text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm">
-                    Bewerken
-                </button>
-                <button type="submit" formaction="{{ route('foodpackages.index') }}"
-                    class="bg-green text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm">
-                    ← Terug naar overzicht
-                </button>
-            </form>
         </div>
     </div>
 
@@ -92,6 +82,16 @@
                         {{ $foodpackage->created_at ? $foodpackage->created_at->format('d-m-Y H:i') : '-' }}
                     </div>
                 </div>
+            </div>
+            <div class="flex justify-end space-x-2 mt-8">
+                <a href="{{ route('foodpackages.edit', $foodpackage) }}"
+                    class="bg-orange text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm">
+                    Bewerken
+                </a>
+                <a href="{{ route('foodpackages.index') }}"
+                    class="bg-green text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm">
+                    ← Terug naar overzicht
+                </a>
             </div>
         </div>
     </div>
