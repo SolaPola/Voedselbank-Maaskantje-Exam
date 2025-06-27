@@ -135,6 +135,10 @@
                         class="block w-full text-left px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-200">
                         ⚙️ Systeeminstellingen
                     </a>
+                    <a href="{{ route('foodpackages.index') }}"
+                        class="block w-full text-left px-4 py-3 bg-orange text-white rounded-lg hover:bg-orange-600 transition duration-200">
+                        🥫 Voedselpakketten Overzicht
+                    </a>
                 </div>
             </div>
         </div>
