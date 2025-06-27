@@ -143,9 +143,15 @@ class ClientController extends Controller
     {
         try {
             $client = Client::findOrFail($id);
+            
+            // Store client name for feedback message
+            $clientName = $client->name;
+            
             $client->delete();
 
-            return redirect()->route('clients.index')->with('success', 'Cliënt succesvol verwijderd!');
+            return redirect()->route('clients.index')->with('success', "Cliënt '{$clientName}' is succesvol verwijderd!");
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('clients.index')->with('error', 'Cliënt niet gevonden. Mogelijk is deze al verwijderd.');
         } catch (\Exception $e) {
             return redirect()->route('clients.index')->with('error', 'Er is een fout opgetreden bij het verwijderen van de cliënt: ' . $e->getMessage());
         }
