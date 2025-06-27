@@ -54,6 +54,7 @@ class ClientController extends Controller
 
             return view('client.index', compact('clients', 'allPreferences', 'preferenceFilter'));
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->back()->with('error', 'Er is een fout opgetreden bij het laden van de cliënten: ' . $e->getMessage());
         }
     }

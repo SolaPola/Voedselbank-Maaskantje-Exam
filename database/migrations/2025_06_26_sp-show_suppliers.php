@@ -11,6 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         $procedure = "
+            DROP PROCEDURE IF EXISTS GetActiveSuppliers;
             CREATE PROCEDURE GetActiveSuppliers()
             BEGIN
                 SELECT 

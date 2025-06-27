@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Buitenweg 23, 5233 DE Maaskantje',
             'contact_name' => 'Boer Henk',
             'contact_email' => 'henk@groenweide.nl',
-            'phone' => '073-8765432',
+            'phone' => 738765432, // Fixed numeric format
             'next_delivery' => now()->addDays(2),
             'comment' => 'Levert verse groenten op maandag en donderdag',
             'isactive' => true,
@@ -113,7 +113,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Dorpsstraat 12, 5235 FB Maaskantje',
             'contact_name' => 'Klaas van Doorn',
             'contact_email' => 'bakkerij@vandoorn.nl',
-            'phone' => '073-9876543',
+            'phone' => 739876543, // Fixed numeric format
             'next_delivery' => now()->addDays(1),
             'comment' => 'Dagelijkse levering van overgebleven brood',
             'isactive' => true,
@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Industriestraat 45, 5301 GH Eindhoven',
             'contact_name' => 'Sandra de Groot',
             'contact_email' => 'sandra@foodmax.nl',
-            'phone' => '040-1234567',
+            'phone' => 401234567, // Fixed numeric format
             'next_delivery' => now()->addDays(14),
             'comment' => 'Tweewekelijkse levering van houdbare producten',
             'isactive' => true,
