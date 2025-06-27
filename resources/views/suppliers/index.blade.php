@@ -505,23 +505,3 @@
 </body>
 
 </html>
-                setTimeout(() => {
-                    successAlert.style.transition = 'opacity 1s, transform 1s';
-                    successAlert.style.opacity = '0';
-                    successAlert.style.transform = 'translateY(-10px)';
-                    setTimeout(() => {rId, supplierName) {
-                        successAlert.remove();leverancier "${supplierName}" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.`)) {
-                    }, 1000);ySelector(`.delete-supplier-form-${supplierId}`).submit();
-                }, 4000);
-            }
-        });t>
-</body>
-        function confirmDelete(supplierId, supplierName) {
-            if (confirm(`Weet je zeker dat je leverancier "${supplierName}" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.`)) {
-                document.querySelector(`.delete-supplier-form-${supplierId}`).submit();
-            }
-        }
-    </script>
-</body>
-
-</html>
