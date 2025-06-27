@@ -20,32 +20,132 @@
         </div>
     @endif
 
-    <!-- Product Search and Filter -->
-    <div class="bg-white p-4 rounded-lg shadow mb-6 flex flex-wrap justify-between items-center">
-        <form action="{{ route('products.index') }}" method="GET" class="flex flex-wrap gap-2">
-            <div class="flex items-center">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Zoek product..." 
-                    class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
-                <select name="category" class="ml-2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
-                    <option value="">Alle categorieën</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-                <button type="submit" class="ml-2 bg-green text-white px-4 py-2 rounded-md hover:bg-green-700">
-                    Zoeken
+    <!-- Advanced Product Search and Filter -->
+    <div class="bg-white p-6 rounded-lg shadow mb-6">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Product Filters</h3>
+        <form action="{{ route('products.index') }}" method="GET" class="space-y-4">
+            <!-- First Row: Name and EAN Code -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Product Naam</label>
+                    <input type="text" 
+                           name="name" 
+                           id="name"
+                           value="{{ request('name') }}" 
+                           placeholder="Zoek op productnaam..." 
+                           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                </div>
+                <div>
+                    <label for="ean_code" class="block text-sm font-medium text-gray-700 mb-2">EAN Code / Barcode</label>
+                    <input type="text" 
+                           name="ean_code" 
+                           id="ean_code"
+                           value="{{ request('ean_code') }}" 
+                           placeholder="Zoek op EAN code..." 
+                           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                </div>
+            </div>
+            
+            <!-- Second Row: Category and Stock Range -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Categorie</label>
+                    <select name="category" 
+                            id="category"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                        <option value="">Alle categorieën</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="stock_min" class="block text-sm font-medium text-gray-700 mb-2">Min. Voorraad</label>
+                    <input type="number" 
+                           name="stock_min" 
+                           id="stock_min"
+                           value="{{ request('stock_min') }}" 
+                           placeholder="Minimum..." 
+                           min="0"
+                           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                </div>
+                <div>
+                    <label for="stock_max" class="block text-sm font-medium text-gray-700 mb-2">Max. Voorraad</label>
+                    <input type="number" 
+                           name="stock_max" 
+                           id="stock_max"
+                           value="{{ request('stock_max') }}" 
+                           placeholder="Maximum..." 
+                           min="0"
+                           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-2 pt-2">
+                <button type="submit" class="bg-green text-white px-6 py-2 rounded-md hover:bg-green-700 transition">
+                    <i class="fa fa-search mr-2"></i>Zoeken
                 </button>
+                <a href="{{ route('products.index') }}" class="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600 transition">
+                    <i class="fa fa-refresh mr-2"></i>Reset Filters
+                </a>
+                <div class="ml-auto">
+                    <a href="{{ route('products.create') }}" class="bg-orange text-white px-6 py-2 rounded-md hover:bg-orange-700 transition">
+                        <i class="fa fa-plus mr-2"></i>Nieuw Product
+                    </a>
+                </div>
             </div>
         </form>
         
-        <div class="flex items-center">
-            <a href="{{ route('products.create') }}" class="bg-orange text-white px-4 py-2 rounded-md hover:bg-orange-700 transition mr-4">
-                <i class="fa fa-plus mr-2"></i> Nieuw Product
-            </a>
+        <!-- Active Filters Display -->
+        @if(request()->hasAny(['name', 'ean_code', 'category', 'stock_min', 'stock_max']))
+            <div class="mt-4 pt-4 border-t border-gray-200">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-sm font-medium text-gray-700">Actieve filters:</span>
+                    
+                    @if(request('name'))
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            Naam: {{ request('name') }}
+                            <a href="{{ route('products.index', array_merge(request()->except('name'))) }}" class="ml-2 text-blue-600 hover:text-blue-800">×</a>
+                        </span>
+                    @endif
+                    
+                    @if(request('ean_code'))
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            EAN: {{ request('ean_code') }}
+                            <a href="{{ route('products.index', array_merge(request()->except('ean_code'))) }}" class="ml-2 text-green-600 hover:text-green-800">×</a>
+                        </span>
+                    @endif
+                    
+                    @if(request('category'))
+                        @php
+                            $selectedCategory = $categories->firstWhere('id', request('category'));
+                        @endphp
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                            Categorie: {{ $selectedCategory ? $selectedCategory->name : request('category') }}
+                            <a href="{{ route('products.index', array_merge(request()->except('category'))) }}" class="ml-2 text-purple-600 hover:text-purple-800">×</a>
+                        </span>
+                    @endif
+                    
+                    @if(request('stock_min') || request('stock_max'))
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                            Voorraad: {{ request('stock_min', '0') }} - {{ request('stock_max', '∞') }}
+                            <a href="{{ route('products.index', array_merge(request()->except(['stock_min', 'stock_max']))) }}" class="ml-2 text-yellow-600 hover:text-yellow-800">×</a>
+                        </span>
+                    @endif
+                </div>
+            </div>
+        @endif
+        
+        <!-- Results Summary -->
+        <div class="mt-4 pt-4 border-t border-gray-200">
             <p class="text-sm text-gray-600">
-                Totaal: <span class="font-bold">{{ $products->total() }}</span> producten
+                Gevonden: <span class="font-bold text-gray-900">{{ $products->total() }}</span> producten
+                @if(request()->hasAny(['name', 'ean_code', 'category', 'stock_min', 'stock_max']))
+                    van alle beschikbare producten
+                @endif
             </p>
         </div>
     </div>
@@ -57,13 +157,89 @@
                 <thead class="bg-gradient-to-r from-gray-50 to-green-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Naam</th>
+                            <a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'name', 'direction' => request('sort') == 'name' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}" 
+                               class="group inline-flex items-center hover:text-gray-700">
+                                Naam
+                                @if(request('sort') == 'name')
+                                    @if(request('direction') == 'asc')
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        </svg>
+                                    @else
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    @endif
+                                @else
+                                    <svg class="ml-2 h-4 w-4 text-gray-300 opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                    </svg>
+                                @endif
+                            </a>
+                        </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            EAN Code</th>
+                            <a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'ean_code', 'direction' => request('sort') == 'ean_code' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}" 
+                               class="group inline-flex items-center hover:text-gray-700">
+                                EAN Code
+                                @if(request('sort') == 'ean_code')
+                                    @if(request('direction') == 'asc')
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        </svg>
+                                    @else
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    @endif
+                                @else
+                                    <svg class="ml-2 h-4 w-4 text-gray-300 opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                    </svg>
+                                @endif
+                            </a>
+                        </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Categorie</th>
+                            <a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'category', 'direction' => request('sort') == 'category' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}" 
+                               class="group inline-flex items-center hover:text-gray-700">
+                                Categorie
+                                @if(request('sort') == 'category')
+                                    @if(request('direction') == 'asc')
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        </svg>
+                                    @else
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    @endif
+                                @else
+                                    <svg class="ml-2 h-4 w-4 text-gray-300 opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                    </svg>
+                                @endif
+                            </a>
+                        </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Voorraad</th>
+                            <a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'stock', 'direction' => request('sort') == 'stock' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}" 
+                               class="group inline-flex items-center hover:text-gray-700">
+                                Voorraad
+                                @if(request('sort') == 'stock')
+                                    @if(request('direction') == 'asc')
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        </svg>
+                                    @else
+                                        <svg class="ml-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    @endif
+                                @else
+                                    <svg class="ml-2 h-4 w-4 text-gray-300 opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                    </svg>
+                                @endif
+                            </a>
+                        </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Vervaldatum</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -74,7 +250,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($products as $product)
-                        <tr class="hover:bg-gray-50 {{ strtotime($product->expiry_date) < strtotime('+7 days') ? 'bg-red-50' : '' }}">
+                        <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
                             </td>
@@ -185,7 +361,7 @@
                     <p class="text-2xl font-bold text-gray-900">{{ $expiringProducts }}</p>
                 </div>
             </div>
-        </div> //hi
+        </div> 
         
         <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
             <div class="flex items-center">

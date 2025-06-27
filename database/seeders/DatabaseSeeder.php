@@ -50,26 +50,56 @@ class DatabaseSeeder extends Seeder
 
         // Seed Categories
         Category::create([
-            'name' => 'Granen & Brood',
-            'comment' => 'Brood, rijst, pasta, granen',
+            'name' => 'Aardappelen, groente, fruit',
+            'comment' => 'Verse en ingeblikte aardappelen, groenten en fruit',
             'isactive' => true,
         ]);
 
         Category::create([
-            'name' => 'Groenten & Fruit',
-            'comment' => 'Verse en ingeblkte groenten en fruit',
+            'name' => 'Kaas, vleeswaren',
+            'comment' => 'Verschillende soorten kaas en vleeswaren',
             'isactive' => true,
         ]);
 
         Category::create([
-            'name' => 'Zuivel',
-            'comment' => 'Melk, kaas, yoghurt',
+            'name' => 'Zuivel, plantaardig en eieren',
+            'comment' => 'Melk, yoghurt, plantaardige alternatieven en eieren',
             'isactive' => true,
         ]);
 
         Category::create([
-            'name' => 'Vlees & Vis',
-            'comment' => 'Vlees, vis, kip',
+            'name' => 'Bakkerij en banket',
+            'comment' => 'Brood, gebak en banketbakkerij producten',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Frisdrank, sappen, koffie en thee',
+            'comment' => 'Alle dranken inclusief warme dranken',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Pasta, rijst en wereldkeuken',
+            'comment' => 'Pasta, rijst en internationale gerechten',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Soepen, sauzen, kruiden en olie',
+            'comment' => 'Soepen, sauzen, kruiden en kookoliën',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Snoep, koek, chips en chocolade',
+            'comment' => 'Snacks, snoep en chocoladeproducten',
+            'isactive' => true,
+        ]);
+
+        Category::create([
+            'name' => 'Baby, verzorging en hygiëne',
+            'comment' => 'Babyproducten en hygiëne artikelen',
             'isactive' => true,
         ]);
 

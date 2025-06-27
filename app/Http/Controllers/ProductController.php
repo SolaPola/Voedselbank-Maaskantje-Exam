@@ -21,23 +21,65 @@ class ProductController extends Controller
             // Get all categories for the filter
             $categories = Category::where('isactive', true)->get();
             
-            // Apply search filter if provided
-            if ($request->has('search') && !empty($request->search)) {
-                $search = strtolower($request->search);
-                $allProducts = $allProducts->filter(function ($product) use ($search) {
-                    return str_contains(strtolower($product->name), $search) || 
-                           str_contains(strtolower($product->ean_code), $search) ||
-                           str_contains(strtolower($product->comment ?? ''), $search);
+            // Apply product name filter
+            if ($request->has('name') && !empty($request->name)) {
+                $name = strtolower($request->name);
+                $allProducts = $allProducts->filter(function ($product) use ($name) {
+                    return str_contains(strtolower($product->name), $name);
                 });
             }
             
-            // Apply category filter if provided
+            // Apply EAN code filter
+            if ($request->has('ean_code') && !empty($request->ean_code)) {
+                $eanCode = strtolower($request->ean_code);
+                $allProducts = $allProducts->filter(function ($product) use ($eanCode) {
+                    return str_contains(strtolower($product->ean_code ?? ''), $eanCode);
+                });
+            }
+            
+            // Apply category filter - fix the property name
             if ($request->has('category') && !empty($request->category)) {
                 $categoryId = $request->category;
                 $allProducts = $allProducts->filter(function ($product) use ($categoryId) {
-                    return $product->categoriesid == $categoryId;
+                    // Check both possible property names from the stored procedure
+                    $productCategoryId = $product->categoriesid ?? $product->category_id ?? null;
+                    return $productCategoryId == $categoryId;
                 });
             }
+            
+            // Apply stock range filter
+            if ($request->has('stock_min') && !empty($request->stock_min)) {
+                $stockMin = (int) $request->stock_min;
+                $allProducts = $allProducts->filter(function ($product) use ($stockMin) {
+                    return $product->stock >= $stockMin;
+                });
+            }
+            
+            if ($request->has('stock_max') && !empty($request->stock_max)) {
+                $stockMax = (int) $request->stock_max;
+                $allProducts = $allProducts->filter(function ($product) use ($stockMax) {
+                    return $product->stock <= $stockMax;
+                });
+            }
+            
+            // Apply sorting
+            $sortBy = $request->get('sort', 'name'); // Default sort by name
+            $sortDirection = $request->get('direction', 'asc'); // Default ascending
+            
+            $allProducts = $allProducts->sortBy(function ($product) use ($sortBy) {
+                switch ($sortBy) {
+                    case 'name':
+                        return strtolower($product->name);
+                    case 'ean_code':
+                        return $product->ean_code ?? '';
+                    case 'category':
+                        return strtolower($product->category_name ?? '');
+                    case 'stock':
+                        return (int) $product->stock;
+                    default:
+                        return strtolower($product->name);
+                }
+            }, SORT_REGULAR, $sortDirection === 'desc');
             
             // Pagination - changed from 20 to 25 items per page
             $currentPage = $request->get('page', 1);
@@ -245,11 +287,17 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
             $productName = $product->name;
-            $product->delete();
+            
+            // Disable foreign key checks temporarily and delete
+            DB::transaction(function () use ($product) {
+                DB::statement('SET FOREIGN_KEY_CHECKS=0');
+                $product->delete();
+                DB::statement('SET FOREIGN_KEY_CHECKS=1');
+            });
             
             return redirect()->route('products.index')->with('success', 'Product "' . $productName . '" succesvol verwijderd!');
         } catch (\Exception $e) {
-            return redirect()->route('products.index')->with('error', 'Er is een fout opgetreden bij het verwijderen van het product.');
+            return redirect()->route('products.index')->with('error', 'Er is een fout opgetreden bij het verwijderen van het product: ' . $e->getMessage());
         }
     }
 }
