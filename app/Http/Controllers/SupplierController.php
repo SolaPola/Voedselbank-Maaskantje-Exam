@@ -145,6 +145,7 @@ class SupplierController extends Controller
     public function update(Request $request, Supplier $supplier)
     {
         try {
+            // Validate the request data
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
@@ -164,15 +165,37 @@ class SupplierController extends Controller
                 'next_delivery.after_or_equal' => 'De leveringsdatum moet vandaag of in de toekomst zijn.',
             ]);
             
+            // Check database connection before attempting update
+            if (!DB::connection()->getDatabaseName()) {
+                throw new \Exception('Database connection failed');
+            }
+            
+            // Perform the update
             $supplier->update($validated);
             
             return redirect()->route('suppliers.edit', $supplier)
                 ->with('success', 'Leverancier succesvol bijgewerkt.');
+                
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle database query exceptions specifically
+            Log::error('Database error updating supplier: ' . $e->getMessage());
+            
+            return back()->withInput()
+                ->with('error', 'Er is een fout opgetreden bij het opslaan van de wijzigingen. Probeer het later opnieuw.');
+                
+        } catch (\PDOException $e) {
+            // Handle PDO exceptions (database connection issues)
+            Log::error('PDO error updating supplier: ' . $e->getMessage());
+            
+            return back()->withInput()
+                ->with('error', 'Er is een fout opgetreden bij het opslaan van de wijzigingen. Probeer het later opnieuw.');
+                
         } catch (Exception $e) {
+            // Handle all other exceptions
             Log::error('Error updating supplier: ' . $e->getMessage());
             
             return back()->withInput()
-                ->with('error', 'Er is een fout opgetreden bij het bijwerken van de leverancier.');
+                ->with('error', 'Er is een fout opgetreden bij het opslaan van de wijzigingen. Probeer het later opnieuw.');
         }
     }
     
