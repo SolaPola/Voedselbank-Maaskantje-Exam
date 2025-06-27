@@ -72,46 +72,68 @@ class DatabaseSeeder extends Seeder
             'isactive' => true,
         ]);
 
-        // Seed Products
+        
+
+
+
+// Seed Categories
+$category1 = Category::create([
+    'name' => 'Brood',
+    'comment' => 'Alle soorten brood',
+    'isactive' => true,
+]);
+$category2 = Category::create([
+    'name' => 'Fruit',
+    'comment' => 'Vers fruit',
+    'isactive' => true,
+]);
+        $category3 = Category::create([
+            'name' => 'Zuivel',
+            'comment' => 'Melk en zuivelproducten',
+            'isactive' => true,
+            ]);
+
+// Seed Products
         Product::create([
             'name' => 'Wit Brood',
-            'categoriesid' => 1,
+            'categoriesid' => $category1->id,
             'ean_code' => '8710398501301',
             'stock' => 50,
             'expiry_date' => now()->addDays(3),
             'comment' => 'Vers wit brood',
             'isactive' => true,
-        ]);
+            ]);
 
         Product::create([
             'name' => 'Rijst 1kg',
-            'categoriesid' => 1,
+            'categoriesid' => $category1->id,
             'ean_code' => '8712566321456',
             'stock' => 100,
             'expiry_date' => now()->addMonths(12),
             'comment' => 'Basmati rijst',
             'isactive' => true,
-        ]);
+            ]);
 
         Product::create([
             'name' => 'Bananen',
-            'categoriesid' => 2,
+            'categoriesid' => $category2->id,
             'ean_code' => '8712345678901',
             'stock' => 25,
             'expiry_date' => now()->addDays(5),
             'comment' => 'Verse bananen',
             'isactive' => true,
-        ]);
+            ]);
 
         Product::create([
             'name' => 'Melk 1L',
-            'categoriesid' => 3,
+            'categoriesid' => $category3->id,
             'ean_code' => '8712345678902',
             'stock' => 40,
             'expiry_date' => now()->addDays(7),
             'comment' => 'Volle melk',
             'isactive' => true,
-        ]);
+            ]);
+
 
         // Seed Clients
         Client::create([
