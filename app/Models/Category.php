@@ -13,18 +13,14 @@ class Category extends Model
         'name',
         'comment',
         'isactive',
-        'dateadded',
-        'datechanged',
     ];
 
     protected $casts = [
         'isactive' => 'boolean',
-        'dateadded' => 'datetime',
-        'datechanged' => 'datetime',
     ];
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'categoryid');
+        return $this->hasMany(Product::class, 'categoriesid');
     }
 }

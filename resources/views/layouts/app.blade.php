@@ -26,6 +26,27 @@
             }
         }
     </script>
+
+    <style>
+        /* Make navbar text blue */
+        nav a,
+        nav button {
+            color: #2563eb !important;
+            /* blue-600 */
+        }
+
+        nav a:hover,
+        nav button:hover {
+            color: #1d4ed8 !important;
+            /* blue-700 */
+        }
+
+        /* Ensure active states are also blue */
+        nav .active {
+            color: #1e40af !important;
+            /* blue-800 */
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased">

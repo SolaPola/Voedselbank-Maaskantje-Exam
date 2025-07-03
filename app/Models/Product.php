@@ -11,27 +11,22 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'categoryid',
+        'categoriesid',
         'ean_code',
-        'category',
         'stock',
         'expiry_date',
         'comment',
         'isactive',
-        'dateadded',
-        'datechanged',
     ];
 
     protected $casts = [
         'expiry_date' => 'date',
         'isactive' => 'boolean',
-        'dateadded' => 'datetime',
-        'datechanged' => 'datetime',
     ];
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'categoryid');
+        return $this->belongsTo(Category::class, 'categoriesid');
     }
 
     public function deliveries()

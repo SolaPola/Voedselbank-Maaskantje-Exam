@@ -1,0 +1,141 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-6">
+        <h2 class="text-3xl font-bold text-gray-900">Nieuw Product Toevoegen</h2>
+        <p class="text-gray-600 mt-2">Voeg een nieuw product toe aan de voorraad</p>
+        <div class="w-24 h-1 bg-orange rounded-full mt-3"></div>
+    </div>
+
+    @if(session('error'))
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+            <p>{{ session('error') }}</p>
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <!-- Information Alert about EAN Code behavior -->
+    <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm">
+                    <strong>Let op:</strong> Als je een EAN code invult die al bestaat, wordt de voorraad automatisch opgeteld bij het bestaande product in plaats van een nieuw product aan te maken.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white shadow rounded-lg overflow-hidden border-t-4 border-green">
+        <form action="{{ route('products.store') }}" method="POST" class="p-6">
+            @csrf
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Product Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                        Productnaam <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" name="name" id="name" value="{{ old('name') }}" required
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green"
+                        placeholder="Bijv. Wit Brood">
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="categoriesid" class="block text-sm font-medium text-gray-700 mb-2">
+                        Categorie <span class="text-red-500">*</span>
+                    </label>
+                    <select name="categoriesid" id="categoriesid" required
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                        <option value="">Selecteer een categorie</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('categoriesid') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- EAN Code with warning -->
+                <div>
+                    <label for="ean_code" class="block text-sm font-medium text-gray-700 mb-2">
+                        EAN Code
+                        <span class="text-blue-500 text-xs">(voorraad wordt opgeteld als code al bestaat)</span>
+                    </label>
+                    <input type="text" name="ean_code" id="ean_code" value="{{ old('ean_code') }}"
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green"
+                        placeholder="Bijv. 8710398501301">
+                </div>
+
+                <!-- Stock -->
+                <div>
+                    <label for="stock" class="block text-sm font-medium text-gray-700 mb-2">
+                        Voorraad toe te voegen <span class="text-red-500">*</span>
+                    </label>
+                    <input type="number" name="stock" id="stock" value="{{ old('stock', 0) }}" min="0" required
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green"
+                        placeholder="0">
+                </div>
+
+                <!-- Expiry Date -->
+                <div>
+                    <label for="expiry_date" class="block text-sm font-medium text-gray-700 mb-2">
+                        Vervaldatum
+                    </label>
+                    <input type="date" name="expiry_date" id="expiry_date" value="{{ old('expiry_date') }}"
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                </div>
+
+                <!-- Status -->
+                <div>
+                    <label for="isactive" class="block text-sm font-medium text-gray-700 mb-2">
+                        Status
+                    </label>
+                    <select name="isactive" id="isactive"
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green">
+                        <option value="1" {{ old('isactive', 1) == 1 ? 'selected' : '' }}>Actief</option>
+                        <option value="0" {{ old('isactive') == 0 ? 'selected' : '' }}>Inactief</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Comment -->
+            <div class="mt-6">
+                <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">
+                    Opmerkingen
+                </label>
+                <textarea name="comment" id="comment" rows="3"
+                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green"
+                    placeholder="Eventuele opmerkingen over het product...">{{ old('comment') }}</textarea>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="mt-8 flex justify-between">
+                <a href="{{ route('products.index') }}" 
+                   class="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600 transition">
+                    Annuleren
+                </a>
+                <button type="submit" 
+                        class="bg-green text-white px-6 py-2 rounded-md hover:bg-green-700 transition">
+                    Product Opslaan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection

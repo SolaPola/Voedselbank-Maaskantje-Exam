@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('postal_code');
             $table->string('phone');
             $table->string('email');
+            $table->string('preference')->nullable();
             $table->integer('adults')->default(0);
             $table->integer('children')->default(0);
             $table->integer('babies')->default(0);

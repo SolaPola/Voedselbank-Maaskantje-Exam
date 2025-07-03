@@ -121,11 +121,11 @@
         <!-- Action Cards -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Side bar</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Snelle Acties</h3>
                 <div class="space-y-3">
-                    <a href="#"
+                    <a href="{{ route('clients.index') }}"
                         class="block w-full text-left px-4 py-3 bg-green text-white rounded-lg hover:bg-green-700 transition duration-200">
-                        👥 Alle Gebruikers Bekijken
+                        👥 Cliënten Overzicht
                     </a>
                     <a href="#"
                         class="block w-full text-left px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
